@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/GSFFront/static/css/main.b18ee1e6.chunk.css",
+    "main.js": "/GSFFront/static/js/main.3da718e5.chunk.js",
+    "main.js.map": "/GSFFront/static/js/main.3da718e5.chunk.js.map",
+    "runtime-main.js": "/GSFFront/static/js/runtime-main.b2d87e03.js",
+    "runtime-main.js.map": "/GSFFront/static/js/runtime-main.b2d87e03.js.map",
+    "static/css/2.de2856d6.chunk.css": "/GSFFront/static/css/2.de2856d6.chunk.css",
+    "static/js/2.caaa9093.chunk.js": "/GSFFront/static/js/2.caaa9093.chunk.js",
+    "static/js/2.caaa9093.chunk.js.map": "/GSFFront/static/js/2.caaa9093.chunk.js.map",
+    "index.html": "/GSFFront/index.html",
+    "precache-manifest.166716bd05e487fb1737a7ebc7bc1e14.js": "/GSFFront/precache-manifest.166716bd05e487fb1737a7ebc7bc1e14.js",
+    "service-worker.js": "/GSFFront/service-worker.js",
+    "static/css/2.de2856d6.chunk.css.map": "/GSFFront/static/css/2.de2856d6.chunk.css.map",
+    "static/css/main.b18ee1e6.chunk.css.map": "/GSFFront/static/css/main.b18ee1e6.chunk.css.map",
+    "static/js/2.caaa9093.chunk.js.LICENSE.txt": "/GSFFront/static/js/2.caaa9093.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b2d87e03.js",
+    "static/css/2.de2856d6.chunk.css",
+    "static/js/2.caaa9093.chunk.js",
+    "static/css/main.b18ee1e6.chunk.css",
+    "static/js/main.3da718e5.chunk.js"
+  ]
+}
