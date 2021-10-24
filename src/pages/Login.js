@@ -61,9 +61,11 @@ function Login(props){
 
     return(
        
-        /*<div className="containerPrincipal">
-            <div className="containerLogin">
+        <div className="form-usuario">
+            <div className="contenedor-form sombra-dark">
+            <h1>Iniciar Sesión</h1>
                 <div className="form-group">
+                <div className="campo-form">
                     <label>Usuario: </label>
                     <br />
                     <input
@@ -72,7 +74,9 @@ function Login(props){
                         name="mail"
                         onChange={handleChange}
                     />
+                    </div>
 
+                    <div className="campo-form">
                     <label>Contraseña: </label>
                     <br />
                     <input
@@ -82,58 +86,15 @@ function Login(props){
                         onChange={handleChange}
                     />
                     <br />
-                    <button className="btn btn-primary" onClick={()=>iniciarSesion()}>Iniciar sesión</button>
+                    </div>
                     
-                </div>
-                </div>*/
+                    <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()} style={{marginTop: '5%'}}>Iniciar sesión</button>
+                    <br />
                
-               
-                /*{componente}
-                
-        </div>*/
-
-        <div className="form-usuario">
-            <div className="contenedor-form sombra-dark">
-                <h1>Iniciar Sesión</h1>
-            <form>
-                <div className="campo-form">
-                    <label htmlFor="email">Usuario: </label>                   
-                        <input
-                            type="email"
-                         
-                            name="mail"
-                            onChange={handleChange}
-                        />
+                    {componente}
                     </div>
-                    <div className="campo-form">
-                    <label htmlFor="password">Contraseña: </label>                   
-                        <input
-                            type="password"
-                       
-                            name="password"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="campo-form">               
-                        <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()}>
-                            Iniciar Sesión
-                        </button>
-                    </div>
-            </form>
-
-                
-            </div>
-
-            <div>
-            {componente}
-        </div>
-        </div>
-
-        
-
-                
-          
-           
+                </div>                        
+        </div>           
     )
 }
 

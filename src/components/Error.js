@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 function Error({mensaje}){
     return(
-        <div className="card-panel red darken-4 error col s12">           
+        <div className="alert alert-danger">          
             {mensaje}
         </div>
         )
