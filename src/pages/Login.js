@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import '../css/Login.css';
 import Error from "../components/Error";
+import { ClassNames } from '@emotion/react';
 
 
 function Login(props){
@@ -20,6 +21,7 @@ function Login(props){
     });
 
     const handleChange=e=>{
+        console.log("dfsdf") 
         const {name, value} = e.target;
         setForm({
             ...form,
@@ -31,11 +33,14 @@ function Login(props){
     var componente;
 
     const iniciarSesion=async()=>{
+        console.log("dfsdf")   
         await axios.get(baseUrl+`/${form.mail}/${form.password}`)
-        .then(response=>{      
+        .then(response=>{    
+            console.log("dfsdf")       
             return response.data;
         }).then(response=>{  
-            //Usuario y contraseña correctos -> Se entra al menú principal        
+            //Usuario y contraseña correctos -> Se entra al menú principal  
+            console.log("dfsdf")      
             var respuesta=response[0];
             cookies.set('id', respuesta.id, {path:'/'});
             props.history.push('menu');
@@ -56,7 +61,7 @@ function Login(props){
 
     return(
        
-        <div className="containerPrincipal">
+        /*<div className="containerPrincipal">
             <div className="containerLogin">
                 <div className="form-group">
                     <label>Usuario: </label>
@@ -80,12 +85,52 @@ function Login(props){
                     <button className="btn btn-primary" onClick={()=>iniciarSesion()}>Iniciar sesión</button>
                     
                 </div>
-                </div>
+                </div>*/
                
-               {/*Mostramos de error*/}
-                {componente}
+               
+                /*{componente}
                 
+        </div>*/
+
+        <div className="form-usuario">
+            <div className="contenedor-form sombra-dark">
+                <h1>Iniciar Sesión</h1>
+            <form>
+                <div className="campo-form">
+                    <label htmlFor="email">Usuario: </label>                   
+                        <input
+                            type="email"
+                         
+                            name="mail"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="campo-form">
+                    <label htmlFor="password">Contraseña: </label>                   
+                        <input
+                            type="password"
+                       
+                            name="password"
+                            onChange={handleChange}
+                        />
+                    </div>
+                    <div className="campo-form">               
+                        <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()}>
+                            Iniciar Sesión
+                        </button>
+                    </div>
+            </form>
+
+                
+            </div>
+
+            <div>
+            {componente}
         </div>
+        </div>
+
+        
+
                 
           
            

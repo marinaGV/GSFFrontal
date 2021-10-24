@@ -1,0 +1,28 @@
+.Navig{
+    background: #15171c;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.btn {
+    margin-top: 0.5rem;
+   
+    padding: 1.5rem;
+    font-size: 100%;
+    font-weight: 200;
+    border-radius: .5rem;
+    border: none;
+    transition: background-color .3s ease; 
+  }
+  .btn:hover {
+    cursor: pointer;
+  }
+  .btn-primario {
+    font-size: 100%;
+    background-color: var(--gris2);
+    color: var(--blanco);
+  }
+  .btn-primario:hover {
+    background: var(--gris3);
+  }

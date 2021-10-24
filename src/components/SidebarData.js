@@ -44,7 +44,7 @@ export const SidebarData = [
             },
             {
                 title: "Importar actuaciones",
-                path:'/menu'
+                path:'/CargarActuaciones'
             },
             {
                 title: "Crear actuación",
