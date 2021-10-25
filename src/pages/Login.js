@@ -91,8 +91,9 @@ function Login(props){
                     <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()} style={{marginTop: '5%'}}>Iniciar sesión</button>
                     <br />
                
-                    {componente}
+                    
                     </div>
+                    {componente}
                 </div>                        
         </div>           
     )

@@ -118,14 +118,14 @@ loadMoreData() {
                   return(
                     <tr>
                       <td>{actuacion.idDdTipoActuaciones}</td>
-                      <td></td>
+                      <td>{actuacion.carretera.nombre}</td>
                       <td>{actuacion.claveObra}</td>
-                      <td>{actuacion.fecha.toLocaleDateString}</td>
+                      <td>{actuacion.fecha}</td>
                       <td>{actuacion.sentido}</td>
                       <td>{actuacion.calzada}</td>
                       <td>{actuacion.gestion}</td>
-                      <td></td>
-                      <td></td>
+                      <td>{actuacion.puntoIni.pk} + {actuacion.puntoIni.m}</td>
+                      <td>{actuacion.puntoFin.pk} + {actuacion.puntoFin.m}</td>
                       <td>{new Intl.NumberFormat("es-ES").format(actuacion.importe)}</td>
                       <td>
                         <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit} size="1x"/></button>
@@ -138,7 +138,7 @@ loadMoreData() {
 
               </tbody>
             </Table>
-
+ 
             <ReactPaginate
                     previousLabel={"prev"}
                     nextLabel={"next"}
