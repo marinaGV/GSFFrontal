@@ -24,25 +24,21 @@ class VerActuaciones extends Component{
       orgtableData: [],
       perPage: 10,
       currentPage: 0,
-      modalInsertat: false
+      modalImportar: false,
+      modalEliminar: false,
+      form:{
+        id: ''
+      }
   }
   this.handlePageClick = this.handlePageClick.bind(this);
 
   }
-  /*state={
-    data:[]
+
+  componentDidMount(){
+    this.peticionGet();
   }
 
-  state={
-    tableData: [],
-    offset: 0,
-    orgtableData: [],
-    perPage: 15,
-    currentPage: 0
-  }*/
-
-  
-
+  /*PAGINACIÓN*/
   handlePageClick = (e) => {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
@@ -65,37 +61,59 @@ loadMoreData() {
   })
 }
 
-    peticionGet=()=>{
-        axios.get(url).then(response=>{
 
-            console.log(response.data);
-            
-            //this.setState({data: response.data})
+/*Obtención datos*/
+peticionGet=()=>{
+  axios.get(url).then(response=>{
 
-            var data = response.data;
-            var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+      console.log(response.data);
+      
+      //this.setState({data: response.data})
 
-            this.setState({
-              pageCount: Math.ceil(data.length / this.state.perPage),
-              orgtableData: response.data,
-              tableData: slice
-            })
-        });
+      var data = response.data;
+      var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
+
+      this.setState({
+        pageCount: Math.ceil(data.length / this.state.perPage),
+        orgtableData: response.data,
+        tableData: slice,
+        modalImportar: false
+      })
+  });
+}    
+
+
+/*Eliminar actuación*/
+peticionDelete=()=>{
+  console.log(this.state.form.id);
+  axios.delete(url+"/"+this.state.form.id).then(response=>{
+    console.log("eliminar");
+    this.setState({modalEliminar: false});
+    this.peticionGet();
+  })
+}    
+
+    
+
+modalImportar=()=>{
+  this.setState({modalImportar: !this.state.modalImportar});
+}    
+
+seleccionarActuacion=(actuacion)=>{
+  console.log("seleccionarActuacion");
+  this.setState({
+    tipoModal: 'actualizar',
+    form: {
+      id: actuacion.id
     }
-
-    componentDidMount(){
-        this.peticionGet();
-    }
-
-    modalInsertar=()=>{
-      this.setState({modalInsertar: !this.state.modalInsertar});
-    }
+  })
+}    
 
     render(){
         return(
             <div className="App"> 
             
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Importar Actuación</button>         
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}>Importar Actuación</button>         
           <br /><br />
           <Table responsive="xl">
               <thead>
@@ -128,9 +146,9 @@ loadMoreData() {
                       <td>{actuacion.puntoFin.pk} + {actuacion.puntoFin.m}</td>
                       <td>{new Intl.NumberFormat("es-ES").format(actuacion.importe)}</td>
                       <td>
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit} size="1x"/></button>
+                        <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit} size="0.5x"/></button>
                         {"  "}
-                        <button className="btn btn-danger"><FontAwesomeIcon icon={faTrashAlt} size="1x"/></button>
+                        <button className="btn btn-danger" onClick={()=>{this.seleccionarActuacion(actuacion); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt} size="0.5x"/></button>
                       </td>
                     </tr>
                   )
@@ -153,7 +171,7 @@ loadMoreData() {
                     activeClassName={"active"}/>
 
 
-          <Modal isOpen={this.state.modalInsertar}>
+          <Modal isOpen={this.state.modalImportar}>
                 <ModalHeader style={{display: 'block'}}>
                   <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
                 </ModalHeader>
@@ -170,8 +188,20 @@ loadMoreData() {
                   </button>*/
                   }
                     {/*<button className="btn btn-primario" onClick={()=>this.props.insertarArchivos}>Importar</button>*/}
-                    <button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>
+                    <button className="btn btn-success" onClick={()=>this.peticionGet()}>Aceptar</button>
+                    {/*<button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>*/}
                 </ModalFooter>
+          </Modal>
+
+
+          <Modal isOpen={this.state.modalEliminar}>
+            <ModalBody>
+               ¿Estás seguro que deseas eliminar a la actuación?
+            </ModalBody>
+            <ModalFooter>
+              <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
+              <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
+            </ModalFooter>
           </Modal>
 
           </div>
