@@ -7,6 +7,7 @@ import '../css/Menu.css';
 
 function CargarExcel(){
 
+
   const url = "https://localhost:44301/api/cargaractuaciones";
 
   const config = {
@@ -34,17 +35,46 @@ function CargarExcel(){
 
     await axios.post(url, f, config)
     .then(response =>{
-      console.log(response.data);     
-      guardarMsgOut(response.data);
-      setMsgOutBoolOK(true);
-      setMsgOutBoolKO(false);
+      console.log(response.data); 
+      /*if (response.data == 1){
+          var msg = "El archivo se ha guardado correctamente.";
+          setMsgOutBoolOK(true);
+          setMsgOutBoolKO(false);
+      } 
+      if (response.data == 3){
+        var msg = "El archivo debe ser de tipo .xls o .xlsx.";
+        setMsgOutBoolKO(true);
+        setMsgOutBoolOK(false);
+      }  */ 
+    switch(response.data){
+      case 1:
+        var msg = "El archivo se ha guardado correctamente.";
+          setMsgOutBoolOK(true);
+          setMsgOutBoolKO(false);
+          break;
+      case 2:
+        var msg = "El archivo debe ser de tipo .xls o .xlsx.";
+        setMsgOutBoolKO(true);
+        setMsgOutBoolOK(false);
+        break;
+      default:
+        var msg = "Error al subir el fichero.";
+        setMsgOutBoolKO(true);
+        setMsgOutBoolOK(false);
+        break;
+
+    } 
+      guardarMsgOut(msg);
+      
       
     }).catch(error=>{
       console.log("prueba2");
       console.log(error);
       guardarMsgOut(error.data);
+      var msg = "Error al subir el fichero.";
       setMsgOutBoolKO(true);
       setMsgOutBoolOK(false);
+      
     })
   }
 
@@ -60,7 +90,7 @@ function CargarExcel(){
         <button className="btn btn-primario" onClick={()=>insertarArchivos()}>Cargar</button>
        <br/><br/>
        { msgOutBoolOK ? 
-       <div class="alert alert-success">
+       <div className="alert alert-success">
           {/*Mostramos mensaje*/}
           {msgOut}
       </div>
@@ -72,7 +102,7 @@ function CargarExcel(){
           {msgOut}
       </div>
       : ""}
-      
+   
       </div>
   )
 

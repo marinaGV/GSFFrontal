@@ -85,7 +85,7 @@ peticionGet=()=>{
 
 /*Eliminar actuación*/
 peticionDelete=()=>{
-  console.log(this.state.form.id);
+  console.log("ID a eliminar: ", this.state.form.id);
   axios.delete(url+"/"+this.state.form.id).then(response=>{
     console.log("eliminar");
     this.setState({modalEliminar: false});
@@ -107,6 +107,8 @@ seleccionarActuacion=(actuacion)=>{
       id: actuacion.id
     }
   })
+
+  console.log("ID a eliminar: ", actuacion.id);
 }    
 
     render(){
@@ -124,10 +126,13 @@ seleccionarActuacion=(actuacion)=>{
                   <th>Fecha</th>
                   <th>Sentido</th>
                   <th>Calzada</th>
-                  <th>C. Gestión</th>
+                  <th>Carriles</th>
+                  <th>Gestión</th>
+                  <th>Carretera Antigua</th>
+                  
                   <th>PK Ini</th>
                   <th>PK Fin</th>
-                  <th>€</th>
+                  <th>Importe (€)</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -141,14 +146,17 @@ seleccionarActuacion=(actuacion)=>{
                       <td>{actuacion.fecha}</td>
                       <td>{actuacion.sentido}</td>
                       <td>{actuacion.calzada}</td>
+                      <td>{actuacion.carriles}</td>
                       <td>{actuacion.gestion}</td>
+                      <td>{actuacion.carreterasAntigua}</td>
+                      
                       <td>{actuacion.puntoIni.pk} + {actuacion.puntoIni.m}</td>
                       <td>{actuacion.puntoFin.pk} + {actuacion.puntoFin.m}</td>
                       <td>{new Intl.NumberFormat("es-ES").format(actuacion.importe)}</td>
                       <td>
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit} size="0.5x"/></button>
+                        <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit}/></button>
                         {"  "}
-                        <button className="btn btn-danger" onClick={()=>{this.seleccionarActuacion(actuacion); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt} size="0.5x"/></button>
+                        <button className="btn btn-danger" onClick={()=>{this.seleccionarActuacion(actuacion); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
                       </td>
                     </tr>
                   )
@@ -173,7 +181,7 @@ seleccionarActuacion=(actuacion)=>{
 
           <Modal isOpen={this.state.modalImportar}>
                 <ModalHeader style={{display: 'block'}}>
-                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                  <span style={{float: 'right'}} onClick={()=>this.modalImportar()}>x</span>
                 </ModalHeader>
                 <ModalBody>
                   <CargarExcel/>
@@ -196,7 +204,7 @@ seleccionarActuacion=(actuacion)=>{
 
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               ¿Estás seguro que deseas eliminar a la actuación?
+               ¿Estás seguro que deseas eliminar la actuación?
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
