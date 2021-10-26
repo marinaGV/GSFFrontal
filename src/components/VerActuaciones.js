@@ -4,15 +4,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
-import { Form, Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import ReactPaginate from 'react-paginate';
 import '../css/Pagination.css';
 import CargarExcel from "../components/CargarExcel";
 import '../css/Menu.css';
-import { Table } from 'react-bootstrap';
+import BootstrapTable from 'react-bootstrap-table-next';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
+import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
+import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 
 
 const url = "https://localhost:44301/actuaciones";
+
+
 
 class VerActuaciones extends Component{
 
@@ -22,24 +28,73 @@ class VerActuaciones extends Component{
       offset: 0,
       tableData: [],
       orgtableData: [],
-      perPage: 10,
+      perPage: 50000,
       currentPage: 0,
       modalImportar: false,
       modalEliminar: false,
       form:{
         id: ''
-      }
+      } 
   }
-  this.handlePageClick = this.handlePageClick.bind(this);
+
+  this.columns = [
+    {dataField: 'idDdTipoActuaciones', text: 'Tipo', sort: true, filter: textFilter()},
+    {dataField: 'carretera.nombre', text: 'Carretera', sort: true, filter: textFilter()},
+    {dataField: 'claveObra', text: 'Clave', sort: true, filter: textFilter()},
+    {dataField: 'fecha', text: 'Fecha', sort: true, filter: textFilter()},
+    {dataField: 'sentido', text: 'Sentido', sort: true, filter: textFilter()},
+    {dataField: 'calzada', text: 'Calzada', sort: true, filter: textFilter()},
+    {dataField: 'gestion', text: 'Gestion', sort: true, filter: textFilter()},
+    {dataField: 'carreterasAntigua', text: 'Carretera Antigua', sort: true, filter: textFilter()},
+    {dataField: 'puntoIni.pk', text: 'Pk Ini', formatter: (cell, row) =>{return <div>{`${row.puntoIni.pk} + ${row.puntoIni.m}`}</div>;}, filter: textFilter()},
+    {dataField: 'puntoFin.pk', text: 'Pk Fin', formatter: (cell, row) =>{return <div>{`${row.puntoFin.pk} + ${row.puntoFin.m}`}</div>;}, filter: textFilter()},
+    {dataField: 'importe', text: 'Importe (€)', sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: 'Acciones', formatter: this.ButtonsAcciones}
+  ]
+
+
+ 
+
+  this.pagination = paginationFactory({
+    page: 1,
+    sizePerPage: 10,
+    lastPageText: '>>',
+    firstPageText: '<<',
+    nextPageText: '>',
+    prePageText: '<',
+    showTotal: true,
+    alwaysShowAllBtns: true,
+  })
+
+
+
+  //this.handlePageClick = this.handlePageClick.bind(this);
 
   }
+
+
+  ButtonsAcciones = (cell, row, rowIndex) => {
+    //console.log("cell :", cell);
+      console.log("row: ", row);
+    //  console.log("rowindex ", rowIndex);
+      
+      
+    return (
+      <div>
+      <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit}/></button>
+      {"  "}
+      <button className="btn btn-danger" onClick={()=>{this.seleccionarActuacion(row); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+      </div>              
+
+      );
+  };
 
   componentDidMount(){
     this.peticionGet();
   }
 
   /*PAGINACIÓN*/
-  handlePageClick = (e) => {
+  /*handlePageClick = (e) => {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
 
@@ -59,7 +114,7 @@ loadMoreData() {
     pageCount: Math.ceil(data.length / this.state.perPage),
     tableData:slice
   })
-}
+}*/
 
 
 /*Obtención datos*/
@@ -101,6 +156,7 @@ modalImportar=()=>{
 
 seleccionarActuacion=(actuacion)=>{
   console.log("seleccionarActuacion");
+  console.log(actuacion);
   this.setState({
     tipoModal: 'actualizar',
     form: {
@@ -117,7 +173,16 @@ seleccionarActuacion=(actuacion)=>{
             
             <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}>Importar Actuación</button>         
           <br /><br />
-          <Table responsive="xl">
+          <BootstrapTable 
+          bootstrap4 
+          keyField='id' 
+          columns={this.columns} 
+          data={this.state.tableData}
+          pagination={this.pagination}
+          filter={filterFactory()}
+          bordered={ false }
+          />
+          {/*<Table responsive="xl">
               <thead>
                 <tr>
                   <th>Tipo</th>
@@ -163,9 +228,9 @@ seleccionarActuacion=(actuacion)=>{
                 })}
 
               </tbody>
-            </Table>
+              </Table>*/}
  
-            <ReactPaginate
+            {/*<ReactPaginate
                     previousLabel={"prev"}
                     nextLabel={"next"}
                     breakLabel={"..."}
@@ -176,7 +241,7 @@ seleccionarActuacion=(actuacion)=>{
                     onPageChange={this.handlePageClick}
                     containerClassName={"pagination"}
                     subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}/>
+            activeClassName={"active"}/>*/}
 
 
           <Modal isOpen={this.state.modalImportar}>

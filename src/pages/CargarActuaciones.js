@@ -17,7 +17,7 @@ function CargarActuaciones(props){
             <div>
               <Sidebar />
             </div>
-            <div style={{marginLeft:'20%'}}>         
+            <div style={{marginLeft:'15%'}}>         
               {/*<div>
                 <CargarExcel />
               </div>*/}
