@@ -21,20 +21,17 @@ function CargarActuaciones(props){
             <div>
                 <Idioma />
             </div>
-            <div style={{marginLeft:'20%'}}>         
+            <div style={{marginLeft:'15%'}}>         
               {/*<div>
                 <CargarExcel />
               </div>*/}
              
               <div style={{marginRight:'10%', marginTop: '5%'}}> 
-              <h1>{ t('Act') }</h1>               
+              <h1>Actuaciones</h1>               
                 <VerActuaciones />
               </div>          
         </div>
       </div>
-          
-
-          
        
     );
 }

@@ -10202,7 +10202,7 @@
     "react-bootstrap" ">=0.23.0"
     "validator" "^3.41.3"
 
-"react-bootstrap@>=0.23.0":
+"react-bootstrap@^2.0.0", "react-bootstrap@>=0.23.0":
   "integrity" "sha512-6nIIPxv36tvyL9T+7x167qTv9oU+wEwxxNgqcQSsbuMuwvXfg2Frt2mRMX3O/f0HCQmBu5Syy6UdClRS4fGqQA=="
   "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.0.0.tgz"
   "version" "2.0.0"
