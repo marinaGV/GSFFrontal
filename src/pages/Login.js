@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, Suspense } from 'react';
 import md5 from 'md5';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cookies from 'universal-cookie';
@@ -6,14 +6,18 @@ import axios from 'axios';
 import '../css/Login.css';
 import Error from "../components/Error";
 import { ClassNames } from '@emotion/react';
+import { useTranslation } from 'react-i18next';
+import Idioma from "../components/Idioma";
+import { useHistory } from 'react-router-dom';
 
 
-function Login(props){
-
+function Foo(props) {
     const baseUrl="https://localhost:44301/api/login";
     const cookies = new Cookies();
     const [error, guardarError] = useState(false);
-
+    //const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation(['global']);
+    const routerHistory = useHistory();
 
     const [form, setForm]=useState({
         mail:'',
@@ -43,7 +47,7 @@ function Login(props){
             console.log("dfsdf")      
             var respuesta=response[0];
             cookies.set('id', respuesta.id, {path:'/'});
-            props.history.push('menu');
+            routerHistory.push('menu');
         }).catch(error=>{
             //Usuario o contraseña incorrectos
             console.log("PRUEBA3");
@@ -60,13 +64,17 @@ function Login(props){
     }
 
     return(
-       
+ 
         <div className="form-usuario">
-            <div className="contenedor-form sombra-dark">
-            <h1>Iniciar Sesión</h1>
+            <div>
+                <Idioma />
+            </div>
+            <div className="contenedor-form sombra-dark">  
+            <h1>{ t('inises') }</h1>
                 <div className="form-group">
+  
                 <div className="campo-form">
-                    <label>Usuario: </label>
+                    <label>{ t('user') }: </label>
                     <br />
                     <input
                         type="text"
@@ -77,7 +85,7 @@ function Login(props){
                     </div>
 
                     <div className="campo-form">
-                    <label>Contraseña: </label>
+                    <label>{ t('pass') }: </label>
                     <br />
                     <input
                         type="password"
@@ -88,15 +96,27 @@ function Login(props){
                     <br />
                     </div>
                     
-                    <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()} style={{marginTop: '5%'}}>Iniciar sesión</button>
+                    <button className="btn btn-primario btn-block" onClick={()=>iniciarSesion()} style={{marginTop: '5%'}}>{ t('log') }</button>
                     <br />
                
                     
                     </div>
                     {componente}
-                </div>                        
-        </div>           
+                </div>   
+                      
+        </div>      
+
     )
+  }
+
+function Login(props){
+
+    return (
+        <Suspense fallback="cargando...">
+          <Foo />
+        </Suspense>
+      );
+
 }
 
 export default Login;

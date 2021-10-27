@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, Fragment } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
@@ -8,87 +8,91 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import DescriptionIcon from '@mui/icons-material/Description';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import { useTranslation } from 'react-i18next';
+import { Translation } from 'react-i18next';
 
 
 export const SidebarData = [
+    
     {
-        title: "Home", 
+        title: <Translation ns= "global">{(t) => <>{t('Home')}</>}</Translation>, 
         icon: <HomeIcon />,
         path: '/menu',
     },
     {
-        title: "Gestión Tramos", 
+        title: <Translation ns= "global">{(t) => <>{t('gestTram')}</>}</Translation>,
         icon: <DirectionsCarIcon />,
         path: '/menu',
 
         subNav: [
             {
-                title: "Importar grafo/tramos",
+                title: <Translation ns= "global">{(t) => <>{t('impGraf')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Ver/Editar carreteras y tramos",
+                title: <Translation ns= "global">{(t) => <>{t('verEditCyT')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Ver/Editar diccionarios de tramos",
+                title: <Translation ns= "global">{(t) => <>{t('verEditDicT')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Importar Aforos",
+                title: <Translation ns= "global">{(t) => <>{t('impAf')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Ver aforos",
+                title: <Translation ns= "global">{(t) => <>{t('varAf')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Importar actuaciones",
+                title: <Translation ns= "global">{(t) => <>{t('impAc')}</>}</Translation>,
                 path:'/CargarActuaciones'
             },
             {
-                title: "Crear actuación",
+                title: <Translation ns= "global">{(t) => <>{t('crearAct')}</>}</Translation>,
                 path:'/menu'
             },
             {
-                title: "Ver actuaciones",
+                title: <Translation ns= "global">{(t) => <>{t('verAct')}</>}</Translation>,
                 path:'/menu'
             },
         ],
     },
     {
-        title: "Gestión Auscultación", 
+        title: <Translation ns= "global">{(t) => <>{t('gestAusc')}</>}</Translation>, 
         icon: <CarRepairIcon />,
         path: '/menu'
     },
     {
-        title: "Consulta Datos", 
+        title: <Translation ns= "global">{(t) => <>{t('comsDat')}</>}</Translation>, 
         icon: <StorageIcon />,
         path: '/menu'
     },
     {
-        title: "Clasificaciones", 
+        title: <Translation ns= "global">{(t) => <>{t('Clasif')}</>}</Translation>,
         icon: <LibraryBooksIcon />,
         path: '/menu'
     },
     {
-        title: "M. Evolución", 
+        title: <Translation ns= "global">{(t) => <>{t('Evol')}</>}</Translation>,
         icon: <ShowChartIcon />,
         path: '/menu'
     },
     {
-        title: "Administración", 
+        title: <Translation ns= "global">{(t) => <>{t('Admin')}</>}</Translation>,
         icon: <AdminPanelSettingsIcon />,
         path: '/menu'
     },
     {
-        title: "Documentación", 
+        title: <Translation ns= "global">{(t) => <>{t('Docum')}</>}</Translation>, 
         icon: <DescriptionIcon />,
         path: '/menu'
     },
     {
-        title: "Cerrar Sesión", 
+        title: <Translation ns= "global">{(t) => <>{t('CerrarSes')}</>}</Translation>,
         icon: <ExitToAppIcon />,
         path: '/'
     },
+    
 ];

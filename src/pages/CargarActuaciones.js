@@ -6,16 +6,20 @@ import Sidebar from "../components/Sidebar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Row, Form } from "react-bootstrap";
 import '../css/Menu.css';
-
+import Idioma from "../components/Idioma";
+import { useTranslation } from 'react-i18next';
 
 
 function CargarActuaciones(props){
-
+  const { t, i18n } = useTranslation(['global']);
     return(
       <div>
                  
             <div>
               <Sidebar />
+            </div>
+            <div>
+                <Idioma />
             </div>
             <div style={{marginLeft:'20%'}}>         
               {/*<div>
@@ -23,7 +27,7 @@ function CargarActuaciones(props){
               </div>*/}
              
               <div style={{marginRight:'10%', marginTop: '5%'}}> 
-              <h1>Actuaciones</h1>               
+              <h1>{ t('Act') }</h1>               
                 <VerActuaciones />
               </div>          
         </div>

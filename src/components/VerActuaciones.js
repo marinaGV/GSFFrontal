@@ -10,12 +10,17 @@ import '../css/Pagination.css';
 import CargarExcel from "../components/CargarExcel";
 import '../css/Menu.css';
 import { Table } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { i18n } from "../config/i18n";
+import { Trans } from 'react-i18next';
+
 
 
 const url = "https://localhost:44301/actuaciones";
+//const { t, i18n } = useTranslation();
 
 class VerActuaciones extends Component{
-
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +36,7 @@ class VerActuaciones extends Component{
       }
   }
   this.handlePageClick = this.handlePageClick.bind(this);
-
+    
   }
 
   componentDidMount(){
@@ -69,7 +74,7 @@ peticionGet=()=>{
       console.log(response.data);
       
       //this.setState({data: response.data})
-
+      
       var data = response.data;
       var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -113,27 +118,28 @@ seleccionarActuacion=(actuacion)=>{
 
     render(){
         return(
+          
             <div className="App"> 
             
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}>Importar Actuación</button>         
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}><Trans ns= "global">ImpAct</Trans></button>         
           <br /><br />
           <Table responsive="xl">
               <thead>
                 <tr>
-                  <th>Tipo</th>
-                  <th>Carretera</th>
-                  <th>Clave Obra</th>
-                  <th>Fecha</th>
-                  <th>Sentido</th>
-                  <th>Calzada</th>
-                  <th>Carriles</th>
-                  <th>Gestión</th>
-                  <th>Carretera Antigua</th>
+                  <th><Trans ns= "global">Tipo</Trans></th>
+                  <th><Trans ns= "global">Carretera</Trans></th>
+                  <th><Trans ns= "global">ClaveObra</Trans></th>
+                  <th><Trans ns= "global">Fecha</Trans></th>
+                  <th><Trans ns= "global">Sentido</Trans></th>
+                  <th><Trans ns= "global">Calzada</Trans></th>
+                  <th><Trans ns= "global">Carriles</Trans></th>
+                  <th><Trans ns= "global">Gestion</Trans></th>
+                  <th><Trans ns= "global">CarreteraAnt</Trans></th>
                   
-                  <th>PK Ini</th>
-                  <th>PK Fin</th>
-                  <th>Importe (€)</th>
-                  <th>Acciones</th>
+                  <th><Trans ns= "global">PKIni</Trans></th>
+                  <th><Trans ns= "global">PKFin</Trans></th>
+                  <th><Trans ns= "global">Importe</Trans></th>
+                  <th><Trans ns= "global">Acciones</Trans></th>
                 </tr>
               </thead>
               <tbody>
