@@ -12,7 +12,7 @@ import { Table } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { i18n } from "../config/i18n";
 import { Trans } from 'react-i18next';
-
+import { Translation } from 'react-i18next';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -43,24 +43,22 @@ class VerActuaciones extends Component{
         id: ''
       } 
   }
-
-  this.handlePageClick = this.handlePageClick.bind(this);
     
 
 
   this.columns = [
-    {dataField: 'idDdTipoActuaciones', text: 'Tipo', sort: true, filter: textFilter()},
-    {dataField: 'carretera.nombre', text: 'Carretera', sort: true, filter: textFilter()},
-    {dataField: 'claveObra', text: 'Clave', sort: true, filter: textFilter()},
-    {dataField: 'fecha', text: 'Fecha', sort: true, filter: textFilter()},
-    {dataField: 'sentido', text: 'Sentido', sort: true, filter: textFilter()},
-    {dataField: 'calzada', text: 'Calzada', sort: true, filter: textFilter()},
-    {dataField: 'gestion', text: 'Gestion', sort: true, filter: textFilter()},
-    {dataField: 'carreterasAntigua', text: 'Carretera Antigua', sort: true, filter: textFilter()},
-    {dataField: 'puntoIni.pk', text: 'Pk Ini', formatter: (cell, row) =>{return <div>{`${row.puntoIni.pk} + ${row.puntoIni.m}`}</div>;}, filter: textFilter()},
-    {dataField: 'puntoFin.pk', text: 'Pk Fin', formatter: (cell, row) =>{return <div>{`${row.puntoFin.pk} + ${row.puntoFin.m}`}</div>;}, filter: textFilter()},
-    {dataField: 'importe', text: 'Importe (€)', sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: 'Acciones', formatter: this.ButtonsAcciones}
+    {dataField: 'idDdTipoActuaciones', text:<Translation ns= "global">{(t) => <>{t('Tipo')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'carretera.nombre', text: <Translation ns= "global">{(t) => <>{t('Carretera')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'claveObra', text: <Translation ns= "global">{(t) => <>{t('Clave')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'fecha', text: <Translation ns= "global">{(t) => <>{t('Fecha')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'sentido', text: <Translation ns= "global">{(t) => <>{t('Sentido')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'calzada', text: <Translation ns= "global">{(t) => <>{t('Calzada')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'gestion', text: <Translation ns= "global">{(t) => <>{t('Gestion')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'carreterasAntigua', text: <Translation ns= "global">{(t) => <>{t('CarreteraAnt')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'puntoIni.pk', text: <Translation ns= "global">{(t) => <>{t('PKIni')}</>}</Translation>, formatter: (cell, row) =>{return <div>{`${row.puntoIni.pk} + ${row.puntoIni.m}`}</div>;}, filter: textFilter()},
+    {dataField: 'puntoFin.pk', text: <Translation ns= "global">{(t) => <>{t( 'PKFin')}</>}</Translation>, formatter: (cell, row) =>{return <div>{`${row.puntoFin.pk} + ${row.puntoFin.m}`}</div>;}, filter: textFilter()},
+    {dataField: 'importe', text: <Translation ns= "global">{(t) => <>{t( 'Importe')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
 
@@ -108,7 +106,6 @@ class VerActuaciones extends Component{
   /*handlePageClick = (e) => {
     const selectedPage = e.selected;
     const offset = selectedPage * this.state.perPage;
-
     this.setState({
         currentPage: selectedPage,
         offset: offset
@@ -116,7 +113,6 @@ class VerActuaciones extends Component{
         this.loadMoreData()
     });
 };
-
 loadMoreData() {
   const data = this.state.orgtableData;
   
@@ -238,7 +234,6 @@ seleccionarActuacion=(actuacion)=>{
                     </tr>
                   )
                 })}
-
               </tbody>
               </Table>*/}
  
@@ -296,4 +291,3 @@ seleccionarActuacion=(actuacion)=>{
 
 
 export default VerActuaciones;
-
