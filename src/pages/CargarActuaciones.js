@@ -27,7 +27,7 @@ function CargarActuaciones(props){
               </div>*/}
              
               <div style={{marginRight:'10%', marginTop: '5%'}}> 
-              <h1>Actuaciones</h1>               
+              <h1>{ t('Act') }</h1>               
                 <VerActuaciones />
               </div>          
         </div>

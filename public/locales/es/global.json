@@ -39,6 +39,24 @@
     "PKFin" : "PK Fin",
     "Importe" : "Importe (€)",
     "ImpAct" : "Importar Actuación",
-    "Clave" : "Clave"
-
+    "Clave" : "Clave",
+    "VerEditTramCar" : "Ver/Editar Tramos y Carreteras",
+    "DDTerrNat" : "idDD Terrenos Naturales",
+    "DDCategExpl" : "idDD Categorias Explanadas",
+    "terrnatcbr" : "terreno natural_cbr",
+    "relleno" : "relleno",
+    "relleno_cbr" : "rellenocbr",
+    "coronacion" : "coronacion",
+    "coronacioncbr" : "coronacion_cbr",
+    "VerDicTram" : "Ver/Editar diccionario de Tramos",
+    "codigo" : "Código",
+    "nombre" : "Nombre",
+    "ClasTecReal" : "Clasificación Técnica Real",
+    "Organismos" : "Organismos",
+    "ClasFunRedes" : "Clasificación funcional / Redes",
+    "RegExpl" : "Régimen de Explotación",
+    "RegGest" : "Régimen de Gestión",
+    "Capas" : "Capas"
+    
+    
 }
