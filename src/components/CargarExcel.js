@@ -15,7 +15,7 @@ function CargarExcel(){
     headers: {
         'content-type': 'multipart/form-data'
     }
-}
+  }
 
   const [archivo, setArchivo]=useState(null);
   const [msgOut, guardarMsgOut] = useState();
@@ -33,9 +33,7 @@ function CargarExcel(){
     f.append('Fichero',archivo);
     console.log(f);
     
-
-    
-
+   
     await axios.post(url, f, config)
     .then(response =>{
       console.log(response.data); 

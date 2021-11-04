@@ -7,6 +7,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import ReactPaginate from 'react-paginate';
 import '../css/Pagination.css';
 import CargarExcel from "../components/CargarExcel";
+import CrearEditarActuacion from "../components/CrearEditarActuacion";
 import '../css/Menu.css';
 import { Table } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +23,8 @@ import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 
 
 
-const url = "https://localhost:44301/actuaciones";
+const urlAct = "https://localhost:44301/actuaciones";
+const url = "https://localhost:44301/api/CargarActuaciones";
 //const { t, i18n } = useTranslation();
 
 
@@ -34,11 +36,13 @@ class VerActuaciones extends Component{
     this.state = {
       offset: 0,
       tableData: [],
+      aditionalData: [],
       orgtableData: [],
       perPage: 50000,
       currentPage: 0,
       modalImportar: false,
       modalEliminar: false,
+      modalInsertar: false,
       form:{
         id: ''
       } 
@@ -76,18 +80,14 @@ class VerActuaciones extends Component{
   })
 
 
-
-  //this.handlePageClick = this.handlePageClick.bind(this);
-
   }
 
 
   ButtonsAcciones = (cell, row, rowIndex) => {
     //console.log("cell :", cell);
-      console.log("row: ", row);
+    //console.log("row: ", row);
     //  console.log("rowindex ", rowIndex);
-      
-      
+           
     return (
       <div>
       <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit}/></button>
@@ -102,26 +102,6 @@ class VerActuaciones extends Component{
     this.peticionGet();
   }
 
-  /*PAGINACIÓN*/
-  /*handlePageClick = (e) => {
-    const selectedPage = e.selected;
-    const offset = selectedPage * this.state.perPage;
-    this.setState({
-        currentPage: selectedPage,
-        offset: offset
-    }, () => {
-        this.loadMoreData()
-    });
-};
-loadMoreData() {
-  const data = this.state.orgtableData;
-  
-  const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
-  this.setState({
-    pageCount: Math.ceil(data.length / this.state.perPage),
-    tableData:slice
-  })
-}*/
 
 
 /*Obtención datos*/
@@ -132,14 +112,18 @@ peticionGet=()=>{
       
       //this.setState({data: response.data})
       
-      var data = response.data;
+      var data = response.data.actuaciones;
       var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
 
       this.setState({
         pageCount: Math.ceil(data.length / this.state.perPage),
         orgtableData: response.data,
         tableData: slice,
-        modalImportar: false
+        tiposActuaciones: response.data.tiposActuaciones,
+        carreterasData: response.data.carreteras,
+        grafosData: response.data.grafo,
+        modalImportar: false,
+        modalInsertar: false
       })
   });
 }    
@@ -148,7 +132,7 @@ peticionGet=()=>{
 /*Eliminar actuación*/
 peticionDelete=()=>{
   console.log("ID a eliminar: ", this.state.form.id);
-  axios.delete(url+"/"+this.state.form.id).then(response=>{
+  axios.delete(urlAct+"/"+this.state.form.id).then(response=>{
     console.log("eliminar");
     this.setState({modalEliminar: false});
     this.peticionGet();
@@ -160,6 +144,10 @@ peticionDelete=()=>{
 modalImportar=()=>{
   this.setState({modalImportar: !this.state.modalImportar});
 }    
+
+modalInsertar=()=>{
+  this.setState({modalInsertar: !this.state.modalInsertar});
+}
 
 seleccionarActuacion=(actuacion)=>{
   console.log("seleccionarActuacion");
@@ -177,79 +165,20 @@ seleccionarActuacion=(actuacion)=>{
     render(){
         return(
           
-            <div className="App"> 
-            
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}><Trans ns= "global">ImpAct</Trans></button>         
+            <div className="App">            
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}><Trans ns= "global">ImpAct</Trans></button>       
+            {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null}); this.modalInsertar()}}><Trans ns= "global">AddAct</Trans></button>      
           <br /><br />
           <BootstrapTable 
-          bootstrap4 
-          keyField='id' 
-          columns={this.columns} 
-          data={this.state.tableData}
-          pagination={this.pagination}
-          filter={filterFactory()}
-          bordered={ false }
+            bootstrap4 
+            keyField='id' 
+            columns={this.columns} 
+            data={this.state.tableData}
+            pagination={this.pagination}
+            filter={filterFactory()}
+            bordered={ false }
           />
-          {/*<Table responsive="xl">
-              <thead>
-                <tr>
-                  <th><Trans ns= "global">Tipo</Trans></th>
-                  <th><Trans ns= "global">Carretera</Trans></th>
-                  <th><Trans ns= "global">ClaveObra</Trans></th>
-                  <th><Trans ns= "global">Fecha</Trans></th>
-                  <th><Trans ns= "global">Sentido</Trans></th>
-                  <th><Trans ns= "global">Calzada</Trans></th>
-                  <th><Trans ns= "global">Carriles</Trans></th>
-                  <th><Trans ns= "global">Gestion</Trans></th>
-                  <th><Trans ns= "global">CarreteraAnt</Trans></th>
-                  
-                  <th><Trans ns= "global">PKIni</Trans></th>
-                  <th><Trans ns= "global">PKFin</Trans></th>
-                  <th><Trans ns= "global">Importe</Trans></th>
-                  <th><Trans ns= "global">Acciones</Trans></th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.tableData.map(actuacion=>{
-                  return(
-                    <tr>
-                      <td>{actuacion.idDdTipoActuaciones}</td>
-                      <td>{actuacion.carretera.nombre}</td>
-                      <td>{actuacion.claveObra}</td>
-                      <td>{actuacion.fecha}</td>
-                      <td>{actuacion.sentido}</td>
-                      <td>{actuacion.calzada}</td>
-                      <td>{actuacion.carriles}</td>
-                      <td>{actuacion.gestion}</td>
-                      <td>{actuacion.carreterasAntigua}</td>
-                      
-                      <td>{actuacion.puntoIni.pk} + {actuacion.puntoIni.m}</td>
-                      <td>{actuacion.puntoFin.pk} + {actuacion.puntoFin.m}</td>
-                      <td>{new Intl.NumberFormat("es-ES").format(actuacion.importe)}</td>
-                      <td>
-                        <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit}/></button>
-                        {"  "}
-                        <button className="btn btn-danger" onClick={()=>{this.seleccionarActuacion(actuacion); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-              </Table>*/}
- 
-            {/*<ReactPaginate
-                    previousLabel={"prev"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-            activeClassName={"active"}/>*/}
-
 
           <Modal isOpen={this.state.modalImportar}>
                 <ModalHeader style={{display: 'block'}}>
@@ -272,16 +201,36 @@ seleccionarActuacion=(actuacion)=>{
                     {/*<button className="btn btn-danger" onClick={()=>this.modalInsertar()}>Cancelar</button>*/}
                 </ModalFooter>
           </Modal>
+       
 
 
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               ¿Estás seguro que deseas eliminar la actuación?
+            <Translation ns= "global">{(t) => <>{t( 'ElimAct')}</>}</Translation>
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
               <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
             </ModalFooter>
+          </Modal>
+
+
+          <Modal size="lg" style={{maxWidth: '1600px', width: '80%'}} isOpen={this.state.modalInsertar}>
+                <ModalHeader style={{display: 'block'}}>
+                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                </ModalHeader>
+                <ModalBody>
+                  <CrearEditarActuacion 
+                  idAct = '' 
+                  tiposActuaciones = {this.state.tiposActuaciones}
+                  carreteras = {this.state.carreterasData}
+                  grafos = {this.state.grafosData}
+                  />                 
+                </ModalBody>
+
+                <ModalFooter>                  
+                    <button className="btn btn-success" onClick={()=>this.peticionGet()}>Aceptar</button>
+                </ModalFooter>
           </Modal>
 
           </div>
