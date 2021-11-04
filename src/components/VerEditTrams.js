@@ -37,6 +37,7 @@ class VerEditTrams extends Component{
       currentPage: 0,
       modalImportar: false,
       modalEliminar: false,
+      modalEdiatar: false,
       activeIndex: 0,
       form:{
         id: ''
@@ -47,32 +48,38 @@ class VerEditTrams extends Component{
 
   this.columns = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns2 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns3 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns4 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns5 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns6 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()}
+    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.pagination = paginationFactory({
@@ -86,10 +93,6 @@ class VerEditTrams extends Component{
     alwaysShowAllBtns: true,
   })
 
-
-
-  //this.handlePageClick = this.handlePageClick.bind(this);
-
   }
 
 
@@ -101,13 +104,26 @@ class VerEditTrams extends Component{
       
     return (
       <div>
-      <button className="btn btn-primary"><FontAwesomeIcon icon={faEdit}/></button>
+      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
       {"  "}
       <button className="btn btn-danger" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
       </div>              
 
       );
   };
+
+  handleChange=async e=>{
+    e.persist();
+    await this.setState({
+      form:{
+        ...this.state.form,
+        [e.target.name]: e.target.value
+      }
+    });
+    console.log(this.state.form);
+    }
+    
+
 
   componentDidMount(){
     this.peticionGet();
@@ -245,10 +261,22 @@ peticionGet6=()=>{
   });
 }    
 
+/*Insertar Capa*/
+modalInsertar=()=>{
+  this.setState({modalInsertar: !this.state.modalInsertar});
+}
 
+/*Editar Capa*/
+peticionPut=()=>{
+  console.log("Codigo a editar: ", this.state.form.id);
+  axios.put(url+"/"+this.state.form).then(response=>{
+    console.log("Editar");
+    this.modalInsertar();
+    this.peticionGet();
+  })
+}
 
-
-/*Eliminar actuación*/
+/*Eliminar Capa*/
 peticionDelete=()=>{
   console.log("Codigo a eliminar: ", this.state.form.id);
   axios.delete(url+"/"+this.state.form.id).then(response=>{
@@ -265,14 +293,14 @@ seleccionarTramo=(DdCodTecReal)=>{
   this.setState({
     tipoModal: 'actualizar',
     form: {
-      id: DdCodTecReal.Codigo
+      id: DdCodTecReal.codigo
     }
   })
 
 
 
 
-  console.log("Codigo a eliminar: ", DdCodTecReal.Codigo);
+  console.log("Codigo a eliminar: ", DdCodTecReal.codigo);
 }    
 
     render(){
@@ -292,7 +320,9 @@ seleccionarTramo=(DdCodTecReal)=>{
             filter={filterFactory()}
             bordered={ false } >
             </BootstrapTable>
+
           </div>
+
         ),
         disabled: false
       },
@@ -395,16 +425,34 @@ seleccionarTramo=(DdCodTecReal)=>{
           
           <div className="App"> 
           <Tab activeIndex={activeIndex} onChange={this.onChange} tabs={tabs} />       
- 
-      
+         
+
 
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               ¿Estás seguro que deseas eliminar la actuación?
+               ¿Estás seguro que deseas eliminar la Capa?
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
               <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
+            </ModalFooter>
+          </Modal>
+          
+          <Modal isOpen={this.state.modalEditar}>
+            <ModalBody>
+               ¿Estás seguro que deseas editar la Capa?
+               <div className="form-group">
+                    <label htmlFor="id">ID</label>
+                    <input className="form-control" type="text" name="codigo" id="codigo" readOnly onChange={this.handleChange} value={this.state.form? this.state.form.id: this.state.data.length+1}/>
+                    <br />
+                    <label htmlFor="nombre">Nombre</label>
+                    <input className="form-control" type="text" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form? this.state.form.nombre: ''}/>
+               </div>
+
+            </ModalBody>
+            <ModalFooter>
+              <button className="btn btn-danger" onClick={()=>this.peticionPut()}>Sí</button>
+              <button className="btn btn-secundary" onClick={()=>this.setState({modalEditar: false})}>No</button>
             </ModalFooter>
           </Modal>
 
