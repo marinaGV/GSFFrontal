@@ -57,5 +57,12 @@
     "RegExpl" : "Règim d'explotació",
     "RegGest" : "Règim de gestió",
     "Capas" : "Capes",
-    "TipFirTram" : "Tipus Ferms Trams"
+    "TipFirTram" : "Tipus Ferms Trams",
+    "ElimAct" : "Estàs segur que vols eliminar l'actuació?",
+    "AddAct" : "Nova Actuació",
+    "TipoAct": "Tipus d'Actuació",
+    "Tramo": "Tram",
+    "TipoFirme": "Tipus Firme",
+    "TipoCalzada": "Tipus Calçada"
+
 }

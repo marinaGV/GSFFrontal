@@ -57,7 +57,12 @@
     "RegExpl" : "Régimen de Explotación",
     "RegGest" : "Régimen de Gestión",
     "Capas" : "Capas",
-    "TipFirTram" : "Tipo Firmes Tramos"
-    
-    
+    "TipFirTram" : "Tipo Firmes Tramos",
+    "ElimAct" : "¿Estás seguro de que quieres eliminar la actuación?",
+    "AddAct" : "Nueva Actuación",
+    "TipoAct": "Tipo de Actuación",
+    "Tramo": "Tramo",
+    "TipoFirme": "Tipo Firme",
+    "TipoCalzada": "Tipo Calzada"
+
 }
