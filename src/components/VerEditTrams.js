@@ -16,14 +16,19 @@ import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 import Tab from "../components/Tab";
 
 
-
-const url = "https://localhost:44301/DdCodTecReal";
+const url1 = "https://localhost:44301/DdCodTecReal";
 const url2 = "https://localhost:44301/DdOrganismos";
 const url3 = "https://localhost:44301/DdRedes";
 const url4 = "https://localhost:44301/DdRegimenExplotacion";
 const url5 = "https://localhost:44301/DdRegimenGestion";
 const url6 = "https://localhost:44301/DdCapasBase";
+var indice ='';
 
+const config = {
+  headers: {
+      'content-type': 'application/json'
+  }
+}
 
 class VerEditTrams extends Component{
   
@@ -39,8 +44,13 @@ class VerEditTrams extends Component{
       modalEliminar: false,
       modalEdiatar: false,
       activeIndex: 0,
+      Index: 0,
+      url:'',
+      setBtnSeleccionar: false,
       form:{
-        id: ''
+        codigo:'',
+        nombre:'',
+        comentario:''
       } 
   }
     
@@ -104,7 +114,7 @@ class VerEditTrams extends Component{
       
     return (
       <div>
-      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
+      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalInsertar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
       {"  "}
       <button className="btn btn-danger" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
       </div>              
@@ -120,13 +130,46 @@ class VerEditTrams extends Component{
         [e.target.name]: e.target.value
       }
     });
-    console.log(this.state.form);
-    }
-    
+    console.log("Funcion Handle",this.state.form);
 
+    //if(this.state.form.codigo != '' && this.state.form.nombre != ''){
+     // this.state.setBtnSeleccionar(true);
+    //}
+
+    //this.habBtnSeleccionar();
+
+    }
+
+    checkSwitch=(param)=>{
+      console.log("Parametro Switch: ",param);
+
+      switch(param) {
+
+        case 0: return url1;
+
+        case 1: return url2;
+   
+        case 2:  return url3;
+   
+        case 3:  return url4;
+  
+        case 4:  return url5;
+   
+        case 5:  return url6;
+  
+        default:  return url1;
+
+        }
+   
+    }
+
+ habBtnSeleccionar(){
+  console.log(this.state.form);
+
+ }
 
   componentDidMount(){
-    this.peticionGet();
+    this.peticionGet1();
     this.peticionGet2();
     this.peticionGet3();
     this.peticionGet4();
@@ -141,9 +184,41 @@ class VerEditTrams extends Component{
   };
 
 
-/*Obtención datos Clasificación técnica real*/
+//Recarga de datos después de una acción dependiendo del Tab
 peticionGet=()=>{
-  axios.get(url).then(response=>{
+  console.log("Indice Tab: ",this.state.Index);
+
+  switch(this.state.Index) {
+
+    case 0: this.peticionGet1();
+    break;
+
+    case 1: this.peticionGet2();
+    break;
+
+    case 2:  this.peticionGet3();
+    break;
+
+    case 3:  this.peticionGet4();
+    break;
+
+    case 4:  this.peticionGet5();
+    break;
+
+    case 5:  this.peticionGet6();
+    break;
+
+    default:  this.peticionGet1();
+    break;
+
+    }
+
+}
+
+
+/*Obtención datos Clasificación técnica real*/
+peticionGet1=()=>{
+  axios.get(url1).then(response=>{
 
       console.log(response.data);
       
@@ -267,47 +342,70 @@ modalInsertar=()=>{
 }
 
 /*Editar Capa*/
-peticionPut=()=>{
-  console.log("Codigo a editar: ", this.state.form.id);
-  axios.put(url+"/"+this.state.form).then(response=>{
-    console.log("Editar");
+peticionPut=(urlVar)=>{
+  const data = new FormData();
+
+  console.log("Codigo a editar: ", this.state.form.codigo);
+  console.log("URL escogida: ", urlVar);
+
+  axios.put(urlVar,this.state.form,config).then(response=>{
+    console.log("OK PUT");
     this.modalInsertar();
     this.peticionGet();
-  })
+  }).catch(error=>{
+    console.log("KO");
+    console.log("URL para PUT:", urlVar);
+    console.log(data);
+    console.log(config);
+    console.log("ERROR PUT");
+    console.log(error);        
+})   
 }
 
+
+
 /*Eliminar Capa*/
-peticionDelete=()=>{
-  console.log("Codigo a eliminar: ", this.state.form.id);
-  axios.delete(url+"/"+this.state.form.id).then(response=>{
+peticionDelete=(urlVar)=>{
+  console.log("Codigo a eliminar: ", this.state.form.codigo);
+  console.log("URL Delete: ", urlVar);
+  axios.delete(urlVar+"/"+this.state.form.codigo).then(response=>{
     console.log("eliminar");
     this.setState({modalEliminar: false});
     this.peticionGet();
-  })
-}    
+  }).catch(error=>{
+    console.log("KO Delete");
+    console.log(urlVar);
+    console.log(this.state.form.codigo);
+    console.log(error);        
+})   
+}
  
 
-seleccionarTramo=(DdCodTecReal)=>{
+seleccionarTramo=(diccionario)=>{
   console.log("seleccionarTramo");
-  console.log(DdCodTecReal);
+  console.log("Diccionario",diccionario);
   this.setState({
     tipoModal: 'actualizar',
     form: {
-      id: DdCodTecReal.codigo
+      codigo: diccionario.codigo,
+      nombre: diccionario.nombre,
+      comentario: ''
     }
   })
 
 
 
-
-  console.log("Codigo a eliminar: ", DdCodTecReal.codigo);
+  console.log("Codigo a eliminar: ", diccionario.codigo);
 }    
 
-    render(){
+    render(url){
         const { activeIndex } = this.state;
             const tabs = [
       {
+       
+
         label: <Translation ns= "global">{(t) => <>{t('ClasTecReal')}</>}</Translation>,
+        
         content: (
           <div>
            <br /><br />
@@ -320,6 +418,7 @@ seleccionarTramo=(DdCodTecReal)=>{
             filter={filterFactory()}
             bordered={ false } >
             </BootstrapTable>
+
 
           </div>
 
@@ -422,40 +521,43 @@ seleccionarTramo=(DdCodTecReal)=>{
     ];
 
         return(
-          
+
+          indice= {activeIndex},
+          this.state.Index=indice.activeIndex,
+          console.log("Indice: ",this.state.Index),
+          this.state.url=this.checkSwitch(indice.activeIndex),
+          console.log("URL elegida: ",this.state.url),
+
           <div className="App"> 
           <Tab activeIndex={activeIndex} onChange={this.onChange} tabs={tabs} />       
-         
-
-
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
                ¿Estás seguro que deseas eliminar la Capa?
             </ModalBody>
             <ModalFooter>
-              <button className="btn btn-danger" onClick={()=>this.peticionDelete()}>Sí</button>
-              <button className="btn btn-secundary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
+              <button className="btn btn-danger" onClick={()=>this.peticionDelete(this.state.url)}>Sí</button>
+              <button className="btn btn-primary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
             </ModalFooter>
           </Modal>
           
-          <Modal isOpen={this.state.modalEditar}>
-            <ModalBody>
-               ¿Estás seguro que deseas editar la Capa?
-               <div className="form-group">
-                    <label htmlFor="id">ID</label>
-                    <input className="form-control" type="text" name="codigo" id="codigo" readOnly onChange={this.handleChange} value={this.state.form? this.state.form.id: this.state.data.length+1}/>
+          <Modal size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalInsertar}>
+                <ModalHeader style={{display: 'block'}}>
+                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                </ModalHeader>
+                <ModalBody>
+                <div className="form-group">
+                    <label htmlFor="id">Codigo</label>
+                    <input className="form-control" type="text" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: this.state.data.length+1}/>
                     <br />
                     <label htmlFor="nombre">Nombre</label>
-                    <input className="form-control" type="text" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form? this.state.form.nombre: ''}/>
-               </div>
+                    <input className="form-control" type="text" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
+                  </div>     
+                </ModalBody>
 
-            </ModalBody>
-            <ModalFooter>
-              <button className="btn btn-danger" onClick={()=>this.peticionPut()}>Sí</button>
-              <button className="btn btn-secundary" onClick={()=>this.setState({modalEditar: false})}>No</button>
-            </ModalFooter>
+                <ModalFooter>                  
+                    <button className="btn btn-success" onClick={()=>this.peticionPut(this.state.url)}>Aceptar</button>
+                </ModalFooter>
           </Modal>
-
           </div>
         )
     }
