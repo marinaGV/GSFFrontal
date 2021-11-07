@@ -6,6 +6,9 @@ i18n
 .use(initReactI18next)
 .use(Backend)
 .init({
+    react : {
+        useSuspense: false
+    },
     interpolation : {
         escapeValue : false
     },
