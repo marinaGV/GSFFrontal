@@ -63,6 +63,7 @@
     "TipoAct": "Tipus d'Actuació",
     "Tramo": "Tram",
     "TipoFirme": "Tipus Firme",
-    "TipoCalzada": "Tipus Calçada"
+    "TipoCalzada": "Tipus Calçada",
+    "PkIniMayorFin": "El Pk inicial no pot ser més gran que el Pk final."
 
 }

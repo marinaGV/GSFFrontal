@@ -63,6 +63,8 @@
     "TipoAct": "Tipo de Actuación",
     "Tramo": "Tramo",
     "TipoFirme": "Tipo Firme",
-    "TipoCalzada": "Tipo Calzada"
+    "TipoCalzada": "Tipo Calzada",
+    "PkIniMayorFin": "El Pk inicial no puede ser mayor que el Pk final.",
+    "ErrorGuardarAct": "Se ha producido un error al guardar la actuación."
 
 }
