@@ -22,6 +22,9 @@ const url3 = "https://localhost:44301/DdRedes";
 const url4 = "https://localhost:44301/DdRegimenExplotacion";
 const url5 = "https://localhost:44301/DdRegimenGestion";
 const url6 = "https://localhost:44301/DdCapasBase";
+const url7 = "https://localhost:44301/DdCapasIntermedia";
+const url8 = "https://localhost:44301/DdCapasRodadura";
+const url9 = "https://localhost:44301/DdCapasSubbase";
 var indice ='';
 
 const config = {
@@ -40,13 +43,15 @@ class VerEditTrams extends Component{
       orgtableData: [],
       perPage: 50000,
       currentPage: 0,
-      modalImportar: false,
+      modalInsertar: false,
       modalEliminar: false,
-      modalEdiatar: false,
+      modalEditar: false,
       activeIndex: 0,
       Index: 0,
       url:'',
       setBtnSeleccionar: false,
+      capa:'',
+      columnaCapa:'',
       form:{
         codigo:'',
         nombre:'',
@@ -92,6 +97,26 @@ class VerEditTrams extends Component{
     {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
+  this.state.columnaCapa = this.columns6
+
+  this.columns7 = [
+    {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+  ]
+
+  this.columns8 = [
+    {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+  ]
+
+  this.columns9 = [
+    {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+  ]
+
   this.pagination = paginationFactory({
     page: 1,
     sizePerPage: 10,
@@ -114,7 +139,7 @@ class VerEditTrams extends Component{
       
     return (
       <div>
-      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalInsertar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
+      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
       {"  "}
       <button className="btn btn-danger" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
       </div>              
@@ -132,13 +157,71 @@ class VerEditTrams extends Component{
     });
     console.log("Funcion Handle",this.state.form);
 
-    //if(this.state.form.codigo != '' && this.state.form.nombre != ''){
-     // this.state.setBtnSeleccionar(true);
-    //}
+    if(this.state.form.codigo === "" || this.state.form.nombre === "" || this.state.form.codigo === undefined || this.state.form.nombre === undefined){
+      this.setState({setBtnSeleccionar: false});
+    }else{
+      this.setState({setBtnSeleccionar: true});
+    }
 
+    console.log("Codigo: ",this.state.form.codigo);
+    console.log("Codigo: ",this.state.form.nombre);
+    console.log("Codigo: ",this.state.setBtnSeleccionar);
     //this.habBtnSeleccionar();
 
     }
+
+
+    handleCapa=async e=>{
+      e.persist();
+      await this.setState({
+        form:{
+          ...this.state.form,
+          [e.target.name]: e.target.value
+        }
+      });
+      console.log("Funcion Handle",e.target.value);
+      
+      switch(e.target.value) {
+
+        case "CapaBase": 
+          this.state.columnaCapa=this.columns6;
+          this.state.capa=this.state.tableData6;
+          console.log("Capa Base", this.state.capa);
+          this.peticionGet6();
+        break;
+    
+        case "CapaIntermedia": 
+          this.state.columnaCapa=this.columns7;
+          this.state.capa=this.state.tableData7;
+          console.log("Capa Intermedia", this.state.capa);
+          this.peticionGet7();
+        break;
+    
+        case "CapaRodadura":  
+          this.state.columnaCapa=this.columns8;
+          this.state.capa=this.state.tableData8;
+          console.log("Capa Rodadura", this.state.capa);
+          this.peticionGet8();
+        break;
+    
+        case "CapaSubbase":  
+          this.state.columnaCapa=this.columns9;
+          this.state.capa=this.state.tableData9;
+          console.log("Capa SubBase", this.state.capa);
+          this.peticionGet9();
+        break;
+    
+        default:  
+          this.state.columnaCapa=this.columns6;
+          this.state.capa=this.state.tableData6;
+          console.log("Default", this.state.capa);
+          this.peticionGet6();
+        break;
+    
+        }
+
+      }
+  
 
     checkSwitch=(param)=>{
       console.log("Parametro Switch: ",param);
@@ -156,6 +239,12 @@ class VerEditTrams extends Component{
         case 4:  return url5;
    
         case 5:  return url6;
+
+        case 6:  return url7;
+
+        case 7:  return url8;
+
+        case 8:  return url9;
   
         default:  return url1;
 
@@ -175,6 +264,9 @@ class VerEditTrams extends Component{
     this.peticionGet4();
     this.peticionGet5();
     this.peticionGet6();
+    this.peticionGet7();
+    this.peticionGet8();
+    this.peticionGet9();
   }
 
   onChange = activeIndex => {
@@ -206,6 +298,15 @@ peticionGet=()=>{
     break;
 
     case 5:  this.peticionGet6();
+    break;
+
+    case 6:  this.peticionGet7();
+    break;
+
+    case 7:  this.peticionGet8();
+    break;
+
+    case 8:  this.peticionGet9();
     break;
 
     default:  this.peticionGet1();
@@ -318,7 +419,7 @@ peticionGet5=()=>{
   });
 }    
 
-/*Obtención datos Régimen Gestión*/
+/*Obtención datos Capa Base*/
 peticionGet6=()=>{
   axios.get(url6).then(response6=>{
 
@@ -331,17 +432,78 @@ peticionGet6=()=>{
         pageCount: Math.ceil(data6.length / this.state.perPage),
         orgtableData6: response6.data,
         tableData6: slice6,
+        modalImportar: false,
+        capa: slice6
+      })
+  });
+  
+}    
+
+/*Obtención datos Capa intermedia*/
+peticionGet7=()=>{
+  axios.get(url7).then(response7=>{
+
+      console.log(response7.data);
+      
+      var data7 = response7.data;
+      var slice7 = data7.slice(this.state.offset, this.state.offset + this.state.perPage)
+
+      this.setState({
+        pageCount: Math.ceil(data7.length / this.state.perPage),
+        orgtableData7: response7.data,
+        tableData7: slice7,
         modalImportar: false
       })
   });
 }    
 
-/*Insertar Capa*/
+/*Obtención datos Capa Rodadura*/
+peticionGet8=()=>{
+  axios.get(url8).then(response8=>{
+
+      console.log(response8.data);
+      
+      var data8 = response8.data;
+      var slice8 = data8.slice(this.state.offset, this.state.offset + this.state.perPage)
+
+      this.setState({
+        pageCount: Math.ceil(data8.length / this.state.perPage),
+        orgtableData8: response8.data,
+        tableData8: slice8,
+        modalImportar: false
+      })
+  });
+}    
+
+/*Obtención datos Capa Subbase*/
+peticionGet9=()=>{
+  axios.get(url9).then(response9=>{
+
+      console.log(response9.data);
+      
+      var data9 = response9.data;
+      var slice9 = data9.slice(this.state.offset, this.state.offset + this.state.perPage)
+
+      this.setState({
+        pageCount: Math.ceil(data9.length / this.state.perPage),
+        orgtableData9: response9.data,
+        tableData9: slice9,
+        modalImportar: false
+      })
+  });
+}    
+
+/*Insertar registro*/
 modalInsertar=()=>{
   this.setState({modalInsertar: !this.state.modalInsertar});
 }
 
-/*Editar Capa*/
+/*Editar registro*/
+modalEditar=()=>{
+  this.setState({modalEditar: !this.state.modalEditar});
+}
+
+/*Editar registro*/
 peticionPut=(urlVar)=>{
   const data = new FormData();
 
@@ -350,7 +512,7 @@ peticionPut=(urlVar)=>{
 
   axios.put(urlVar,this.state.form,config).then(response=>{
     console.log("OK PUT");
-    this.modalInsertar();
+    this.setState({modalEditar: false});
     this.peticionGet();
   }).catch(error=>{
     console.log("KO");
@@ -362,6 +524,35 @@ peticionPut=(urlVar)=>{
 })   
 }
 
+
+/*Editar registro*/
+peticionPost=(urlVar)=>{
+  const data = new FormData();
+
+  console.log("Objeto a insertar: ", this.state.form);
+  console.log("URL escogida: ", urlVar);
+  console.log("Validación: ", this.state.setBtnSeleccionar);
+
+  if (this.state.setBtnSeleccionar==true){
+    axios.post(urlVar,this.state.form,config).then(response=>{
+      console.log("OK POST");
+      this.setState({modalInsertar: false});
+      this.peticionGet();
+      this.setState({setBtnSeleccionar: false});
+    }).catch(error=>{
+      this.setState({setBtnSeleccionar: false});
+      console.log("KO");
+      console.log("URL para POST:", urlVar);
+      console.log(data);
+      console.log(config);
+      console.log("ERROR POST");
+      console.log(error);        
+    })   
+  }else{
+    alert("Rellena correctamente el formulario");
+    this.setState({setBtnSeleccionar: false});
+  }
+}
 
 
 /*Eliminar Capa*/
@@ -381,6 +572,7 @@ peticionDelete=(urlVar)=>{
 }
  
 
+//Selecciona una row
 seleccionarTramo=(diccionario)=>{
   console.log("seleccionarTramo");
   console.log("Diccionario",diccionario);
@@ -393,10 +585,8 @@ seleccionarTramo=(diccionario)=>{
     }
   })
 
-
-
   console.log("Codigo a eliminar: ", diccionario.codigo);
-}    
+}   
 
     render(url){
         const { activeIndex } = this.state;
@@ -408,17 +598,19 @@ seleccionarTramo=(diccionario)=>{
         
         content: (
           <div>
-           <br /><br />
-            <BootstrapTable  
-            bootstrap4 
-            keyField='codigo' 
-            columns={this.columns} 
-            data={this.state.tableData}
-            pagination={this.pagination}
-            filter={filterFactory()}
-            bordered={ false } >
-            </BootstrapTable>
-
+             
+              {"  "}
+              <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+              <br /><br />
+              <BootstrapTable  
+              bootstrap4 
+              keyField='codigo' 
+              columns={this.columns} 
+              data={this.state.tableData}
+              pagination={this.pagination}
+              filter={filterFactory()}
+              bordered={ false } >
+              </BootstrapTable>
 
           </div>
 
@@ -429,6 +621,9 @@ seleccionarTramo=(diccionario)=>{
         label: <Translation ns= "global">{(t) => <>{t('Organismos')}</>}</Translation>,
         content: (
           <div>
+             {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+
            <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -447,6 +642,8 @@ seleccionarTramo=(diccionario)=>{
         label: <Translation ns= "global">{(t) => <>{t('ClasFunRedes')}</>}</Translation>,
         content: (
           <div>
+             {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -466,6 +663,8 @@ seleccionarTramo=(diccionario)=>{
         label: <Translation ns= "global">{(t) => <>{t('RegExpl')}</>}</Translation>,
         content: (
           <div>
+            {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -484,6 +683,8 @@ seleccionarTramo=(diccionario)=>{
         label: <Translation ns= "global">{(t) => <>{t('RegGest')}</>}</Translation>,
         content: (
           <div>
+            {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -502,12 +703,23 @@ seleccionarTramo=(diccionario)=>{
         label:  <Translation ns= "global">{(t) => <>{t('Capas')}</>}</Translation>,
         content: (
           <div>
+             {"  "}
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>   
+            <span style={{float: 'right'}}>
+            <select onChange={this.handleCapa}>
+                <option value="CapaBase">Capa Base</option>
+                <option value="CapaIntermedia">Capa Intermedia</option>
+                <option value="CapaRodadura">Capa Rodadura</option>
+                <option value="CapaSubbase">Capa Subbase</option>
+              </select>
+            </span>
+   
             <br /><br />
             <BootstrapTable  
             bootstrap4 
             keyField={'codigo', 'IdDdTiposFirmesTramo'}
-            columns={this.columns6} 
-            data={this.state.tableData6}
+            columns={this.state.columnaCapa} 
+            data={this.state.capa}
             pagination={this.pagination}
             filter={filterFactory()}
             bordered={ false } >
@@ -529,10 +741,33 @@ seleccionarTramo=(diccionario)=>{
           console.log("URL elegida: ",this.state.url),
 
           <div className="App"> 
-          <Tab activeIndex={activeIndex} onChange={this.onChange} tabs={tabs} />       
+
+          <Tab activeIndex={activeIndex} onChange={this.onChange} tabs={tabs} />  
+
+          <Modal  size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalInsertar}>
+                <ModalHeader style={{display: 'block'}}>
+                Insertar registro
+                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                </ModalHeader>
+                <ModalBody>
+                 
+                <div className="form-group">
+                    <label htmlFor="id">Codigo</label>
+                    <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' onChange={this.handleChange} />
+                    <br />
+                    <label htmlFor="nombre">Nombre</label>
+                    <input className="form-control" type="text" maxLength = "128" name="nombre" id="nombre" onChange={this.handleChange} />
+                  </div>     
+                </ModalBody>
+
+                <ModalFooter>                  
+                    <button className="btn btn-success" onClick={()=>this.peticionPost(this.state.url)}>Aceptar</button>
+                </ModalFooter>
+          </Modal>
+     
           <Modal isOpen={this.state.modalEliminar}>
             <ModalBody>
-               ¿Estás seguro que deseas eliminar la Capa?
+               ¿Estás seguro que deseas eliminar el registro?
             </ModalBody>
             <ModalFooter>
               <button className="btn btn-danger" onClick={()=>this.peticionDelete(this.state.url)}>Sí</button>
@@ -540,17 +775,18 @@ seleccionarTramo=(diccionario)=>{
             </ModalFooter>
           </Modal>
           
-          <Modal size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalInsertar}>
+          <Modal size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalEditar}>
                 <ModalHeader style={{display: 'block'}}>
-                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                  Editar registro
+                  <span style={{float: 'right'}} onClick={()=>this.modalEditar()}>x</span>
                 </ModalHeader>
                 <ModalBody>
                 <div className="form-group">
                     <label htmlFor="id">Codigo</label>
-                    <input className="form-control" type="text" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: this.state.data.length+1}/>
+                    <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
                     <br />
                     <label htmlFor="nombre">Nombre</label>
-                    <input className="form-control" type="text" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
+                    <input className="form-control" type="text" maxLength = "128" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
                   </div>     
                 </ModalBody>
 
@@ -558,6 +794,8 @@ seleccionarTramo=(diccionario)=>{
                     <button className="btn btn-success" onClick={()=>this.peticionPut(this.state.url)}>Aceptar</button>
                 </ModalFooter>
           </Modal>
+
+  
           </div>
         )
     }
