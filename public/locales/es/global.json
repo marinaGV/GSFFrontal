@@ -65,6 +65,18 @@
     "TipoFirme": "Tipo Firme",
     "TipoCalzada": "Tipo Calzada",
     "PkIniMayorFin": "El Pk inicial no puede ser mayor que el Pk final.",
-    "ErrorGuardarAct": "Se ha producido un error al guardar la actuación."
-
+    "ErrorGuardarAct": "Se ha producido un error al guardar la actuación.",
+    "eliReg": "¿Estás seguro que deseas eliminar el registro?",
+    "edReg": "Editar registro",
+    "addRegist": "Añadir registro",
+    "CapaBase": "Capa Base",
+    "CapaInter": "Capa Intermedia",
+    "CapaRod": "Capa Rodadura",
+    "CapaSubb": "Capa Subbase",
+    "Aceptar":"Aceptar",
+    "Guardar":"Guardar",
+    "NGuardar":"No guardar",
+    "cancelar":"Cancelar",
+    "GuardarCam": "¿Desea guardar los cambios editados?",
+    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?"	
 }

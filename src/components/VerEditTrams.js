@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react';
+import React, { Component, useState , Fragment} from 'react';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,6 +14,7 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import filterFactory, {textFilter} from 'react-bootstrap-table2-filter';
 import Tab from "../components/Tab";
+import ModalTitle from "react-bootstrap/ModalTitle";
 
 
 const url1 = "https://localhost:44301/DdCodTecReal";
@@ -26,12 +27,14 @@ const url7 = "https://localhost:44301/DdCapasIntermedia";
 const url8 = "https://localhost:44301/DdCapasRodadura";
 const url9 = "https://localhost:44301/DdCapasSubbase";
 var indice ='';
+var paramIndex = 0;
 
 const config = {
   headers: {
       'content-type': 'application/json'
   }
 }
+
 
 class VerEditTrams extends Component{
   
@@ -40,7 +43,23 @@ class VerEditTrams extends Component{
     this.state = {
       offset: 0,
       tableData: [],
+      tableData2: [],
+      tableData3: [],
+      tableData4: [],
+      tableData5: [],
+      tableData6: [],
+      tableData7: [],
+      tableData8: [],
+      tableData9: [],
       orgtableData: [],
+      orgtableData2: [],
+      orgtableData3: [],
+      orgtableData4: [],
+      orgtableData5: [],
+      orgtableData6: [],
+      orgtableData7: [],
+      orgtableData8: [],
+      orgtableData9: [],
       perPage: 50000,
       currentPage: 0,
       modalInsertar: false,
@@ -48,6 +67,7 @@ class VerEditTrams extends Component{
       modalEditar: false,
       activeIndex: 0,
       Index: 0,
+      IndexCapa: 0,
       url:'',
       setBtnSeleccionar: false,
       capa:'',
@@ -55,68 +75,70 @@ class VerEditTrams extends Component{
       form:{
         codigo:'',
         nombre:'',
-        comentario:''
+        comentario:'',
+        idDdTiposFirmesTramo:'Flexible'
       } 
   }
     
-
-
+ 
+  //Carga de datos de las tablas
   this.columns = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'nombre', text:<Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns2 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
     {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns3 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'nombre', text:<Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns4 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'nombre', text:<Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns5 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'nombre', text: <Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'nombre', text:<Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns6 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'idDdTiposFirmesTramo', text:<Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
-  this.state.columnaCapa = this.columns6
+  //this.state.columnaCapa = this.columns6
 
   this.columns7 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'idDdTiposFirmesTramo', text:<Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns8 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
     {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
   this.columns9 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'idDdTiposFirmesTramo', text: <Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
-    {dataField: 'acciones', text: <Translation ns= "global">{(t) => <>{t( 'Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
+    {dataField: 'idDdTiposFirmesTramo', text:<Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation>, sort: true, filter: textFilter()},
+    {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
+  //Paginación
   this.pagination = paginationFactory({
     page: 1,
     sizePerPage: 10,
@@ -130,13 +152,10 @@ class VerEditTrams extends Component{
 
   }
 
-
+  //Botones de las rows
   ButtonsAcciones = (cell, row, rowIndex) => {
-    //console.log("cell :", cell);
       console.log("row: ", row);
-    //  console.log("rowindex ", rowIndex);
-      
-      
+  
     return (
       <div>
       <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
@@ -147,6 +166,7 @@ class VerEditTrams extends Component{
       );
   };
 
+  //Maneja la edición e inserción en los forms
   handleChange=async e=>{
     e.persist();
     await this.setState({
@@ -156,22 +176,32 @@ class VerEditTrams extends Component{
       }
     });
     console.log("Funcion Handle",this.state.form);
+    console.log("Indice: ",this.state.Index);
+    this.state.form.idDdTiposFirmesTramo = this.state.form.idDdTiposFirmesTramo === undefined ? "Flexible" : this.state.form.idDdTiposFirmesTramo;
 
-    if(this.state.form.codigo === "" || this.state.form.nombre === "" || this.state.form.codigo === undefined || this.state.form.nombre === undefined){
-      this.setState({setBtnSeleccionar: false});
+    if(this.state.Index !=5){ 
+      if(this.state.form.codigo === "" || this.state.form.nombre === "" || this.state.form.codigo === undefined || this.state.form.nombre === undefined){
+        this.setState({setBtnSeleccionar: false});
+      }else{
+        this.setState({setBtnSeleccionar: true});
+      }
     }else{
-      this.setState({setBtnSeleccionar: true});
+      if(this.state.form.codigo === "" || this.state.form.codigo === undefined){
+        this.setState({setBtnSeleccionar: false});
+      }else{
+        this.setState({setBtnSeleccionar: true});
+      }
     }
-
     console.log("Codigo: ",this.state.form.codigo);
-    console.log("Codigo: ",this.state.form.nombre);
-    console.log("Codigo: ",this.state.setBtnSeleccionar);
-    //this.habBtnSeleccionar();
+    console.log("Nombre: ",this.state.form.nombre);
+    console.log("tiposfirme: ",this.state.form.idDdTiposFirmesTramo);
+    console.log("Estado Validación: ",this.state.setBtnSeleccionar);
 
     }
 
 
-    handleCapa=async e=>{
+  //Carag Datos delas subTabs
+  handleCapa=async e=>{
       e.persist();
       await this.setState({
         form:{
@@ -187,6 +217,7 @@ class VerEditTrams extends Component{
           this.state.columnaCapa=this.columns6;
           this.state.capa=this.state.tableData6;
           console.log("Capa Base", this.state.capa);
+          this.state.IndexCapa=0;
           this.peticionGet6();
         break;
     
@@ -194,6 +225,7 @@ class VerEditTrams extends Component{
           this.state.columnaCapa=this.columns7;
           this.state.capa=this.state.tableData7;
           console.log("Capa Intermedia", this.state.capa);
+          this.state.IndexCapa=1;
           this.peticionGet7();
         break;
     
@@ -201,6 +233,7 @@ class VerEditTrams extends Component{
           this.state.columnaCapa=this.columns8;
           this.state.capa=this.state.tableData8;
           console.log("Capa Rodadura", this.state.capa);
+          this.state.IndexCapa=2;
           this.peticionGet8();
         break;
     
@@ -208,6 +241,7 @@ class VerEditTrams extends Component{
           this.state.columnaCapa=this.columns9;
           this.state.capa=this.state.tableData9;
           console.log("Capa SubBase", this.state.capa);
+          this.state.IndexCapa=3;
           this.peticionGet9();
         break;
     
@@ -215,18 +249,29 @@ class VerEditTrams extends Component{
           this.state.columnaCapa=this.columns6;
           this.state.capa=this.state.tableData6;
           console.log("Default", this.state.capa);
-          this.peticionGet6();
+          this.state.IndexCapa=0;
+          this.componentDidMount();
         break;
     
         }
 
       }
   
-
+    //Devuelve URL según Tab o subTab
     checkSwitch=(param)=>{
       console.log("Parametro Switch: ",param);
 
-      switch(param) {
+      if(param === 5 &&  this.state.IndexCapa === 1){
+        paramIndex = param + this.state.IndexCapa
+      }else if(param === 5 &&  this.state.IndexCapa === 2){
+        paramIndex = param + this.state.IndexCapa
+      }else if(param === 5 &&  this.state.IndexCapa === 3){
+        paramIndex = param + this.state.IndexCapa
+      }else{
+        paramIndex = param
+      }
+
+      switch(paramIndex) {
 
         case 0: return url1;
 
@@ -241,11 +286,11 @@ class VerEditTrams extends Component{
         case 5:  return url6;
 
         case 6:  return url7;
-
+        
         case 7:  return url8;
 
         case 8:  return url9;
-  
+
         default:  return url1;
 
         }
@@ -269,6 +314,7 @@ class VerEditTrams extends Component{
     this.peticionGet9();
   }
 
+  // Cambia el índice de la Tab
   onChange = activeIndex => {
     this.setState({
       activeIndex
@@ -278,9 +324,9 @@ class VerEditTrams extends Component{
 
 //Recarga de datos después de una acción dependiendo del Tab
 peticionGet=()=>{
-  console.log("Indice Tab: ",this.state.Index);
+  console.log("Indice Tab: ",paramIndex);
 
-  switch(this.state.Index) {
+  switch(paramIndex) {
 
     case 0: this.peticionGet1();
     break;
@@ -301,12 +347,15 @@ peticionGet=()=>{
     break;
 
     case 6:  this.peticionGet7();
+
     break;
 
     case 7:  this.peticionGet8();
+
     break;
 
     case 8:  this.peticionGet9();
+ 
     break;
 
     default:  this.peticionGet1();
@@ -322,9 +371,7 @@ peticionGet1=()=>{
   axios.get(url1).then(response=>{
 
       console.log(response.data);
-      
-      //this.setState({data: response.data})
-      
+
       var data = response.data;
       var slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -342,9 +389,6 @@ peticionGet2=()=>{
   axios.get(url2).then(response2=>{
 
       console.log(response2.data);
-      
-      //this.setState({data: response.data})
-      
       var data2 = response2.data;
       var slice2 = data2.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -362,9 +406,6 @@ peticionGet3=()=>{
   axios.get(url3).then(response3=>{
 
       console.log(response3.data);
-      
-      //this.setState({data: response.data})
-      
       var data3 = response3.data;
       var slice3 = data3.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -383,9 +424,6 @@ peticionGet4=()=>{
   axios.get(url4).then(response4=>{
 
       console.log(response4.data);
-      
-      //this.setState({data: response.data})
-      
       var data4 = response4.data;
       var slice4 = data4.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -404,9 +442,6 @@ peticionGet5=()=>{
   axios.get(url5).then(response5=>{
 
       console.log(response5.data);
-      
-      //this.setState({data: response.data})
-      
       var data5 = response5.data;
       var slice5 = data5.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -423,8 +458,7 @@ peticionGet5=()=>{
 peticionGet6=()=>{
   axios.get(url6).then(response6=>{
 
-      console.log(response6.data);
-      
+      console.log(response6.data);      
       var data6 = response6.data;
       var slice6 = data6.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -444,7 +478,6 @@ peticionGet7=()=>{
   axios.get(url7).then(response7=>{
 
       console.log(response7.data);
-      
       var data7 = response7.data;
       var slice7 = data7.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -461,8 +494,7 @@ peticionGet7=()=>{
 peticionGet8=()=>{
   axios.get(url8).then(response8=>{
 
-      console.log(response8.data);
-      
+      console.log(response8.data);      
       var data8 = response8.data;
       var slice8 = data8.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -479,8 +511,7 @@ peticionGet8=()=>{
 peticionGet9=()=>{
   axios.get(url9).then(response9=>{
 
-      console.log(response9.data);
-      
+      console.log(response9.data);     
       var data9 = response9.data;
       var slice9 = data9.slice(this.state.offset, this.state.offset + this.state.perPage)
 
@@ -492,6 +523,16 @@ peticionGet9=()=>{
       })
   });
 }    
+
+/*Verificar Insertar registro*/
+modalVerificar=()=>{
+  this.setState({modalVerificar: !this.state.modalVerificar});
+}
+
+/*Verificar Editar registro*/
+modalVerificarEd=()=>{
+  this.setState({modalVerificarEd: !this.state.modalVerificarEd});
+}
 
 /*Insertar registro*/
 modalInsertar=()=>{
@@ -514,18 +555,21 @@ peticionPut=(urlVar)=>{
     console.log("OK PUT");
     this.setState({modalEditar: false});
     this.peticionGet();
+    this.setState({modalVerificarEd: false});
   }).catch(error=>{
+    this.setState({modalVerificarEd: false});
     console.log("KO");
     console.log("URL para PUT:", urlVar);
     console.log(data);
     console.log(config);
     console.log("ERROR PUT");
     console.log(error);        
+    alert("Error mientras se modificaban datos. Pongase en contacto con elservicio técnico"); 
 })   
 }
 
 
-/*Editar registro*/
+/*Insertar registro*/
 peticionPost=(urlVar)=>{
   const data = new FormData();
 
@@ -537,16 +581,20 @@ peticionPost=(urlVar)=>{
     axios.post(urlVar,this.state.form,config).then(response=>{
       console.log("OK POST");
       this.setState({modalInsertar: false});
-      this.peticionGet();
       this.setState({setBtnSeleccionar: false});
+      this.setState({modalVerificar: false});
+      this.peticionGet();
     }).catch(error=>{
       this.setState({setBtnSeleccionar: false});
+      this.setState({modalVerificar: false});
       console.log("KO");
       console.log("URL para POST:", urlVar);
       console.log(data);
       console.log(config);
       console.log("ERROR POST");
-      console.log(error);        
+      console.log(error); 
+      alert("Error mientras se añadían datos. Pongase en contacto con elservicio técnico");  
+      this.setState({modalInsertar: false});     
     })   
   }else{
     alert("Rellena correctamente el formulario");
@@ -555,7 +603,7 @@ peticionPost=(urlVar)=>{
 }
 
 
-/*Eliminar Capa*/
+/*Eliminar registro*/
 peticionDelete=(urlVar)=>{
   console.log("Codigo a eliminar: ", this.state.form.codigo);
   console.log("URL Delete: ", urlVar);
@@ -567,7 +615,8 @@ peticionDelete=(urlVar)=>{
     console.log("KO Delete");
     console.log(urlVar);
     console.log(this.state.form.codigo);
-    console.log(error);        
+    console.log(error);     
+    alert("Error mientras se eliminaban datos. Pongase en contacto con elservicio técnico");    
 })   
 }
  
@@ -581,26 +630,25 @@ seleccionarTramo=(diccionario)=>{
     form: {
       codigo: diccionario.codigo,
       nombre: diccionario.nombre,
+      idDdTiposFirmesTramo: 'Flexible',
       comentario: ''
     }
   })
 
   console.log("Codigo a eliminar: ", diccionario.codigo);
 }   
-
+    //Devolvemos las Tabs con datos
     render(url){
         const { activeIndex } = this.state;
             const tabs = [
       {
-       
-
         label: <Translation ns= "global">{(t) => <>{t('ClasTecReal')}</>}</Translation>,
         
         content: (
           <div>
              
               {"  "}
-              <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+              <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>      
               <br /><br />
               <BootstrapTable  
               bootstrap4 
@@ -611,9 +659,7 @@ seleccionarTramo=(diccionario)=>{
               filter={filterFactory()}
               bordered={ false } >
               </BootstrapTable>
-
           </div>
-
         ),
         disabled: false
       },
@@ -622,9 +668,8 @@ seleccionarTramo=(diccionario)=>{
         content: (
           <div>
              {"  "}
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
-
-           <br /><br />
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>      
+            <br /><br />
             <BootstrapTable  
             bootstrap4 
             keyField='codigo' 
@@ -643,7 +688,7 @@ seleccionarTramo=(diccionario)=>{
         content: (
           <div>
              {"  "}
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -664,7 +709,7 @@ seleccionarTramo=(diccionario)=>{
         content: (
           <div>
             {"  "}
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -684,7 +729,7 @@ seleccionarTramo=(diccionario)=>{
         content: (
           <div>
             {"  "}
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>      
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>      
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -699,12 +744,13 @@ seleccionarTramo=(diccionario)=>{
         ),
         disabled: false
       },
-     {
+     {  
+        
         label:  <Translation ns= "global">{(t) => <>{t('Capas')}</>}</Translation>,
         content: (
           <div>
              {"  "}
-            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}>Añadir Registro</button>   
+            <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalInsertar()}}><Translation ns= "global">{(t) => <>{t('addRegist')}</>}</Translation></button>   
             <span style={{float: 'right'}}>
             <select onChange={this.handleCapa}>
                 <option value="CapaBase">Capa Base</option>
@@ -713,7 +759,7 @@ seleccionarTramo=(diccionario)=>{
                 <option value="CapaSubbase">Capa Subbase</option>
               </select>
             </span>
-   
+
             <br /><br />
             <BootstrapTable  
             bootstrap4 
@@ -732,72 +778,127 @@ seleccionarTramo=(diccionario)=>{
 
     ];
 
-        return(
+      return(
+        //Retomamos valores de Índice de la Tab o SubTab con su respectiva URL. Debajo, en el fragment, Pop-ups y Forms
+        indice= {activeIndex},
+        this.state.Index=indice.activeIndex,
+        console.log("Indice: ",this.state.Index),
+        this.state.url=this.checkSwitch(indice.activeIndex),
+        console.log("URL elegida: ",this.state.url),
 
-          indice= {activeIndex},
-          this.state.Index=indice.activeIndex,
-          console.log("Indice: ",this.state.Index),
-          this.state.url=this.checkSwitch(indice.activeIndex),
-          console.log("URL elegida: ",this.state.url),
-
-          <div className="App"> 
+        <div className="App"> 
 
           <Tab activeIndex={activeIndex} onChange={this.onChange} tabs={tabs} />  
-
-          <Modal  size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalInsertar}>
-                <ModalHeader style={{display: 'block'}}>
-                Insertar registro
-                  <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
-                </ModalHeader>
-                <ModalBody>
-                 
-                <div className="form-group">
-                    <label htmlFor="id">Codigo</label>
-                    <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' onChange={this.handleChange} />
-                    <br />
-                    <label htmlFor="nombre">Nombre</label>
-                    <input className="form-control" type="text" maxLength = "128" name="nombre" id="nombre" onChange={this.handleChange} />
-                  </div>     
-                </ModalBody>
-
-                <ModalFooter>                  
-                    <button className="btn btn-success" onClick={()=>this.peticionPost(this.state.url)}>Aceptar</button>
-                </ModalFooter>
-          </Modal>
-     
-          <Modal isOpen={this.state.modalEliminar}>
-            <ModalBody>
-               ¿Estás seguro que deseas eliminar el registro?
-            </ModalBody>
-            <ModalFooter>
-              <button className="btn btn-danger" onClick={()=>this.peticionDelete(this.state.url)}>Sí</button>
-              <button className="btn btn-primary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
-            </ModalFooter>
-          </Modal>
           
-          <Modal size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalEditar}>
-                <ModalHeader style={{display: 'block'}}>
-                  Editar registro
-                  <span style={{float: 'right'}} onClick={()=>this.modalEditar()}>x</span>
-                </ModalHeader>
-                <ModalBody>
+          <Fragment>
+			      <Modal  size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalInsertar}>
+				      <ModalHeader style={{display: 'block'}}>
+              <span style={{float: 'right'}}>
+                <button className="btn btn-danger" onClick={()=>{this.setState({tipoModal: 'verificar'}); this.modalVerificar()}}>x</button>
+              </span>
+              <ModalTitle as="h2"><Translation ns= "global">{(t) => <>{t('insReg')}</>}</Translation></ModalTitle>
+              </ModalHeader>
+				      <ModalBody>
+					      { indice.activeIndex != 5  ?
+				          <div className="form-group">
+						        <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
+						        <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' onChange={this.handleChange} />
+						        <br />
+						        <label htmlFor="nombre"><Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation></label>
+						        <input className="form-control" type="text" maxLength = "60" name="nombre" id="nombre" onChange={this.handleChange} />						
+					        </div>
+					      :  
+	
                 <div className="form-group">
-                    <label htmlFor="id">Codigo</label>
-                    <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
-                    <br />
-                    <label htmlFor="nombre">Nombre</label>
-                    <input className="form-control" type="text" maxLength = "128" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
-                  </div>     
-                </ModalBody>
+                  <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
+                  <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
+                  <br />
+                  <label htmlFor="idDdTiposFirmesTramo"><Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation></label>
+                  <select name="idDdTiposFirmesTramo" id="idDdTiposFirmesTramo" onChange={this.handleChange}>
+                    <option value="Flexible">Flexible</option>
+                    <option value="Rígid">Rígid</option>
+                    <option value="Semirrígid">Semirrígid</option>
+                  </select>
+                </div>  
+					      }     
+				      </ModalBody>	
+				      <ModalFooter>                  
+					      <button className="btn btn-success" onClick={()=>this.peticionPost(this.state.url)}>Aceptar</button>
+				      </ModalFooter>
+			      </Modal>
+		
+			      <Modal isOpen={this.state.modalEliminar}>
+				      <ModalBody>
+              <Translation ns= "global">{(t) => <>{t('eliReg')}</>}</Translation>			        
+				      </ModalBody>
+				      <ModalFooter>
+				        <button className="btn btn-danger" onClick={()=>this.peticionDelete(this.state.url)}>Sí</button>
+				        <button className="btn btn-primary" onClick={()=>this.setState({modalEliminar: false})}>No</button>
+				      </ModalFooter>
+			      </Modal>
 
-                <ModalFooter>                  
-                    <button className="btn btn-success" onClick={()=>this.peticionPut(this.state.url)}>Aceptar</button>
-                </ModalFooter>
-          </Modal>
+            <Modal isOpen={this.state.modalVerificar}>
+				      <ModalBody>
+              <Translation ns= "global">{(t) => <>{t('GuardarCamAdd')}</>}</Translation>                			        
+				      </ModalBody>
+				      <ModalFooter>                               
+				        <button className="btn btn-primary" onClick={()=>this.peticionPost(this.state.url)}><Translation ns= "global">{(t) => <>{t('Guardar')}</>}</Translation></button>
+				        <button className="btn btn-primary" onClick={()=>this.setState({modalVerificar: false, modalInsertar: false})}><Translation ns= "global">{(t) => <>{t('NGuardar')}</>}</Translation></button>
+                <button className="btn btn-primary" onClick={()=>this.setState({modalVerificar: false})}><Translation ns= "global">{(t) => <>{t('cancelar')}</>}</Translation></button>
+				      </ModalFooter>
+			      </Modal>
 
-  
-          </div>
-        )
+            <Modal isOpen={this.state.modalVerificarEd}>
+				      <ModalBody>
+                <Translation ns= "global">{(t) => <>{t('GuardarCam')}</>}</Translation>                            		        
+				      </ModalBody>
+				      <ModalFooter>
+				        <button className="btn btn-primary" onClick={()=>this.peticionPut(this.state.url)}><Translation ns= "global">{(t) => <>{t('Guardar')}</>}</Translation></button>
+				        <button className="btn btn-primary" onClick={()=>this.setState({modalVerificarEd: false, modalEditar: false})}><Translation ns= "global">{(t) => <>{t('NGuardar')}</>}</Translation></button>
+                <button className="btn btn-primary" onClick={()=>this.setState({modalVerificarEd: false})}><Translation ns= "global">{(t) => <>{t('cancelar')}</>}</Translation></button>
+				      </ModalFooter>
+			      </Modal>
+			
+			      <Modal size="lg" style={{maxWidth: '800px', width: '60%'}} isOpen={this.state.modalEditar}>
+              <ModalHeader style={{display: 'block'}}>
+              <span style={{float: 'right'}}>
+                <button className="btn btn-danger" onClick={()=>{this.setState({tipoModal: 'verificarEd'}); this.modalVerificarEd()}}>x</button>
+              </span>
+              <ModalTitle as="h2"><Translation ns= "global">{(t) => <>{t('edReg')}</>}</Translation></ModalTitle>
+ 
+              </ModalHeader>
+              <ModalBody>
+					      { indice.activeIndex != 5  ?
+					        <div className="form-group">
+						        <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
+						        <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
+						        <br />
+						        <label htmlFor="nombre"><Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation></label>
+						        <input className="form-control" type="text" maxLength = "60" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
+					        </div>  
+					      :  	
+					        <div className="form-group">
+					          <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
+					          <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
+					          <br />
+					          <label htmlFor="idDdTiposFirmesTramo"><Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation></label>
+                    <select name="idDdTiposFirmesTramo" id="idDdTiposFirmesTramo" onChange={this.handleChange}>
+                      <option value="Flexible">Flexible</option>
+                      <option value="Rígid">Rígid</option>
+                      <option value="Semirrígid">Semirrígid</option>
+                    </select>
+					        </div>  
+	
+					      }   
+              </ModalBody>
+              <ModalFooter>                  
+                <button className="btn btn-success" onClick={()=>this.peticionPut(this.state.url)}><Translation ns= "global">{(t) => <>{t('Aceptar')}</>}</Translation></button>
+              </ModalFooter>
+			      </Modal>
+          </Fragment>
+          
+        </div>
+      )
     }
 }
 
