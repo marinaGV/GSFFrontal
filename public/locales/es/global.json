@@ -1,4 +1,5 @@
-{ 
+{   
+    "Acciones" : "Acciones",
     "user" : "Usuario",
     "pass" : "Contraseña",
     "log" : "Acceder",

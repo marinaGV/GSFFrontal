@@ -1,3 +1,4 @@
+
 import React, { Component, useState , Fragment} from 'react';
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -28,6 +29,8 @@ const url8 = "https://localhost:44301/DdCapasRodadura";
 const url9 = "https://localhost:44301/DdCapasSubbase";
 var indice ='';
 var paramIndex = 0;
+let editBool = false;
+var idtramos='Flexible';
 
 const config = {
   headers: {
@@ -118,7 +121,7 @@ class VerEditTrams extends Component{
     {dataField: 'acciones', text:<Translation ns= "global">{(t) => <>{t('Acciones')}</>}</Translation>, formatter: this.ButtonsAcciones}
   ]
 
-  //this.state.columnaCapa = this.columns6
+  this.state.columnaCapa = this.columns6
 
   this.columns7 = [
     {dataField: 'codigo', text:<Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
@@ -152,15 +155,50 @@ class VerEditTrams extends Component{
 
   }
 
+
+  //Default idtramos para evitar el null
+  InserSelector = () => {
+    console.log("EDITAMOS",editBool);
+    if(editBool===false){
+
+      idtramos='Flexible';
+     
+    }else{
+      
+      idtramos=this.state.form.idDdTiposFirmesTramo;
+    }
+
+    console.log("MIRAR AQUI: ", idtramos);
+
+    //Devolvemos a false el valor que gestiona en que estado estamos
+    editBool = false;
+    return (
+
+      <div className="form-group">
+      <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
+      <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
+      <br />
+      <label htmlFor="idDdTiposFirmesTramo"><Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation></label>
+      <select name="idDdTiposFirmesTramo" id="idDdTiposFirmesTramo" onChange={this.handleChange} defaultValue={idtramos}>
+        <option value="Flexible">Flexible</option>
+        <option value="Rígid">Rígid</option>
+        <option value="Semirrígid">Semirrígid</option>
+      </select>
+    </div>  
+      
+    );
+  };
+
+
   //Botones de las rows
   ButtonsAcciones = (cell, row, rowIndex) => {
       console.log("row: ", row);
   
     return (
       <div>
-      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
+      <button className="btn btn-primary" onClick={()=>{this.seleccionarTramo(row, true); this.setState({modalEditar: true})}}><FontAwesomeIcon icon={faEdit}/></button>
       {"  "}
-      <button className="btn btn-danger" onClick={()=>{this.seleccionarTramo(row); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+      <button className="btn btn-danger" onClick={()=>{this.seleccionarTramo(row, false); this.setState({modalEliminar: true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
       </div>              
 
       );
@@ -250,7 +288,7 @@ class VerEditTrams extends Component{
           this.state.capa=this.state.tableData6;
           console.log("Default", this.state.capa);
           this.state.IndexCapa=0;
-          this.componentDidMount();
+          this.peticionGet6();
         break;
     
         }
@@ -594,7 +632,7 @@ peticionPost=(urlVar)=>{
       console.log("ERROR POST");
       console.log(error); 
       alert("Error mientras se añadían datos. Pongase en contacto con elservicio técnico");  
-      this.setState({modalInsertar: false});     
+      this.setState({modalInsertar: false});   
     })   
   }else{
     alert("Rellena correctamente el formulario");
@@ -615,30 +653,35 @@ peticionDelete=(urlVar)=>{
     console.log("KO Delete");
     console.log(urlVar);
     console.log(this.state.form.codigo);
-    console.log(error);     
+    console.log(error);    
     alert("Error mientras se eliminaban datos. Pongase en contacto con elservicio técnico");    
 })   
 }
  
 
 //Selecciona una row
-seleccionarTramo=(diccionario)=>{
-  console.log("seleccionarTramo");
+seleccionarTramo=(diccionario, editar)=>{
+  editBool = editar;
+  console.log("editBool", editBool);
   console.log("Diccionario",diccionario);
   this.setState({
+    modalEditar: editar,
     tipoModal: 'actualizar',
     form: {
       codigo: diccionario.codigo,
       nombre: diccionario.nombre,
-      idDdTiposFirmesTramo: 'Flexible',
+      idDdTiposFirmesTramo: diccionario.idDdTiposFirmesTramo != null  ? diccionario.idDdTiposFirmesTramo : 'Flexible',
       comentario: ''
     }
   })
 
   console.log("Codigo a eliminar: ", diccionario.codigo);
+  console.log("Diccionario idDdTiposFirmesTramo: ", diccionario.idDdTiposFirmesTramo);
+
 }   
     //Devolvemos las Tabs con datos
     render(url){
+        
         const { activeIndex } = this.state;
             const tabs = [
       {
@@ -876,19 +919,8 @@ seleccionarTramo=(diccionario)=>{
 						        <label htmlFor="nombre"><Translation ns= "global">{(t) => <>{t('nombre')}</>}</Translation></label>
 						        <input className="form-control" type="text" maxLength = "60" name="nombre" id="nombre" onChange={this.handleChange} value={this.state.form?this.state.form.nombre: ''}/>
 					        </div>  
-					      :  	
-					        <div className="form-group">
-					          <label htmlFor="id"><Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation></label>
-					          <input className="form-control" type="text" maxLength = "16" name='codigo' id='codigo' readOnly onChange={this.handleChange} value={this.state.form?this.state.form.codigo: ''}/>
-					          <br />
-					          <label htmlFor="idDdTiposFirmesTramo"><Translation ns= "global">{(t) => <>{t('TipFirTram')}</>}</Translation></label>
-                    <select name="idDdTiposFirmesTramo" id="idDdTiposFirmesTramo" onChange={this.handleChange}>
-                      <option value="Flexible">Flexible</option>
-                      <option value="Rígid">Rígid</option>
-                      <option value="Semirrígid">Semirrígid</option>
-                    </select>
-					        </div>  
-	
+					      : 
+                  this.InserSelector()
 					      }   
               </ModalBody>
               <ModalFooter>                  
