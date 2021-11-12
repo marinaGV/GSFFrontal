@@ -29,7 +29,7 @@
     "Act" : "Actuaciones",
     "Tipo" : "Tipo",
     "Carretera" : "Carretera",
-    "ClaveObra" : "Clave Obra",
+    "ClaveObra" : "Clave de Obra",
     "Fecha" : "Fecha",
     "Sentido" : "Sentido",
     "Calzada" : "Calzada",
@@ -79,5 +79,12 @@
     "NGuardar":"No guardar",
     "cancelar":"Cancelar",
     "GuardarCam": "¿Desea guardar los cambios editados?",
-    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?"	
+    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",	
+    "ActNueva": "Nueva Actuación",
+    "FechaFinAct": "Fecha Fin de Actuación",
+    "Creciente": "Creciente",
+    "Decreciente": "Decreciente",
+    "Observaciones": "Observaciones",
+    "SinTramAct": "No existen tramos con las opciones selccionadas."
+
 }

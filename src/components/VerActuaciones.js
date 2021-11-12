@@ -121,7 +121,12 @@ peticionGet=()=>{
         tableData: slice,
         tiposActuaciones: response.data.tiposActuaciones,
         carreterasData: response.data.carreteras,
-        grafosData: response.data.grafo,
+        tiposFirmeTramoData: response.data.tiposFirmeTramos,
+        capasBaseData: response.data.capasBase,
+        capasSubbaseData: response.data.capasSubbase,
+        capasRodaduraData: response.data.capasRodadura,
+        capasIntermediaData: response.data.capasIntermedia,
+        NivelesInfluenciaData: response.data.nivelesInfluencia,
         modalImportar: false,
         modalInsertar: false
       })
@@ -218,13 +223,21 @@ seleccionarActuacion=(actuacion)=>{
           <Modal size="lg" style={{maxWidth: '1600px', width: '80%'}} isOpen={this.state.modalInsertar}>
                 <ModalHeader style={{display: 'block'}}>
                   <span style={{float: 'right'}} onClick={()=>this.modalInsertar()}>x</span>
+                  
                 </ModalHeader>
                 <ModalBody>
                   <CrearEditarActuacion 
                   idAct = '' 
-                  tiposActuaciones = {this.state.tiposActuaciones}
+                  Data = {this.state.orgtableData}
+                  /*tiposActuaciones = {this.state.tiposActuaciones}
                   carreteras = {this.state.carreterasData}
-                  grafos = {this.state.grafosData}
+                  tiposFirmeTramo = {this.state.tiposFirmeTramoData}
+                  capasBase = {this.state.capasBaseData}
+                  capasSubbase = {this.state.capasSubbaseData}
+                  capasRodadura = {this.state.capasRodaduraData}
+                  capasIntermedia = {this.state.capasIntermediaData}
+                  nivelesInfluencia = {this.state.NivelesInfluenciaData}*/
+
                   />                 
                 </ModalBody>
 
