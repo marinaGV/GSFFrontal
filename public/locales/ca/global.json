@@ -88,5 +88,10 @@
     "Observaciones": "Observacions",
     "SinTramAct": "No existeixen trams amb les opcions seleccionades.",
     "SeleccionarTramos": "Seleccionar Trams",
-    "CamposObligatorios": "Tots els camps són obligatoris."
+    "CamposObligatorios": "Tots els camps són obligatoris.",
+    "ExcelOK": "L'arxiu s'ha carregat correctament.",
+    "ExcelKO": "Error en pujar el fitxer.",
+    "FormatoKO": "L'arxiu ha de ser de tipus .xls o .xlsx.",
+    "CarreteraKO": "El nom de la carretera no és vàlid.",
+    "ActuacionKO": "Ja existeix l'actuació."
 }
