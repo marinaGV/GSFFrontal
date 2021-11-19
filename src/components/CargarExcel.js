@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Error from "../components/Error";
 import '../css/Menu.css';
 import { useTranslation } from 'react-i18next';
+import { Translation } from 'react-i18next';
 
 
 function CargarExcel(){
@@ -37,48 +38,39 @@ function CargarExcel(){
     await axios.post(url, f, config)
     .then(response =>{
       console.log(response.data); 
-      /*if (response.data == 1){
-          var msg = "El archivo se ha guardado correctamente.";
-          setMsgOutBoolOK(true);
-          setMsgOutBoolKO(false);
-      } 
-      if (response.data == 3){
-        var msg = "El archivo debe ser de tipo .xls o .xlsx.";
-        setMsgOutBoolKO(true);
-        setMsgOutBoolOK(false);
-      }  */ 
-      
-    switch(response.data){
-      
-      case 1:
-        var msg = "El archivo se ha guardado correctamente.";
-          setMsgOutBoolOK(true);
-          setMsgOutBoolKO(false);
-          break;
-      case 2:
-        var msg = "El archivo debe ser de tipo .xls o .xlsx.";
-        setMsgOutBoolKO(true);
-        setMsgOutBoolOK(false);
-        break;
-      default:
-      var msg = "Error al subir el fichero.";
-        setMsgOutBoolKO(true);
-        setMsgOutBoolOK(false);
-        break;
-
-
-    } 
-  
-    guardarMsgOut(msg);
+      var msg = <Translation ns= "global">{(t) => <>{t('ExcelOK')}</>}</Translation>   
+      setMsgOutBoolOK(true);
+      setMsgOutBoolKO(false);
+      guardarMsgOut(msg);
       
       
     }).catch(error=>{
       console.log("prueba2");
-      console.log(error);
-      guardarMsgOut(error.data);
-      var msg = "Error al subir el fichero.";
-      setMsgOutBoolKO(true);
+
+
       setMsgOutBoolOK(false);
+      setMsgOutBoolKO(true);
+
+      switch(error.response.data){
+      
+        case 1:
+          var msg= <Translation ns= "global">{(t) => <>{t('ExcelKO')}</>}</Translation>           
+            break;
+        case 2:
+          var msg= <Translation ns= "global">{(t) => <>{t('FormatoKO')}</>}</Translation>
+          break;
+        case 3:
+          var msg= <Translation ns= "global">{(t) => <>{t('CarreteraKO')}</>}</Translation>
+          break;
+        case 4:
+          var msg= <Translation ns= "global">{(t) => <>{t('ActuacionKO')}</>}</Translation>
+          break;
+        default:
+          var msg= <Translation ns= "global">{(t) => <>{t('FormatoKO')}</>}</Translation>
+          break;
+      } 
+
+      guardarMsgOut(msg);
       
     })
     
@@ -89,8 +81,8 @@ function CargarExcel(){
   return (
     <div>
       <br/>
-        <h1>{ t('ImpAct') }</h1>
-        <p>Idioma : { i18n.language }</p>
+        <h1><Translation ns= "global">{(t) => <>{t('ImpActs')}</>}</Translation>   </h1>
+        {/*<p>Idioma : { i18n.language }</p>*/}
         <input type="file" name ="files" onChange={(e)=>subirArchivos(e.target.files[0])} />
         
         <button className="btn btn-primario" onClick={()=>insertarArchivos()}>{ t('Cargar') }</button>

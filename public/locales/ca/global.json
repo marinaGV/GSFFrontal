@@ -29,7 +29,7 @@
     "Act" : "Actuacions",
     "Tipo" : "Tipus",
     "Carretera" : "Carretera",
-    "ClaveObra" : "Clau Obra",
+    "ClaveObra" : "Clau d'Obra",
     "Fecha" : "Data",
     "Sentido" : "Sentit",
     "Calzada" : "Calçada",
@@ -65,7 +65,7 @@
     "Tramo": "Tram",
     "TipoFirme": "Tipus Firme",
     "TipoCalzada": "Tipus Calçada",
-    "PkIniMayorFin": "El Pk inicial no pot ser més gran que el Pk final.",
+    "PkIniMayorFin": "El Pk inicial no pot ser major que el Pk final.",
     "eliReg": "¿Estàs segur que vols eliminar el registre?",
     "edReg": "Editar registre",
     "insReg": "Insertar registre",
@@ -79,6 +79,7 @@
     "cancelar":"Cancel·lar",
     "GuardarCam": "Voleu desar els canvis editats?",
     "GuardarCamAdd": "Voleu desar els canvis afegits?",
+<<<<<<< HEAD
     "VerImpAfor": "Veure/Importar Aforaments",
     "region": "Regió",
     "pk": "Pk",
@@ -93,4 +94,21 @@
     "anyomedida": "Any/Mesura",
     "campanya": "Campanya",
     "ImpAfr": "Importar Aforaments"	
+=======
+    "ErrorGuardarAct": "S'ha produït un error en guardar l'actuació.",
+    "ActNueva": "Nova Actuació",
+    "Clave de Obra": "Clau d'Obra",
+    "FechaFinAct": "Data Fi d'Actuació",
+    "Creciente": "Creixent",
+    "Decreciente": "Decreixent",
+    "Observaciones": "Observacions",
+    "SinTramAct": "No existeixen trams amb les opcions seleccionades.",
+    "SeleccionarTramos": "Seleccionar Trams",
+    "CamposObligatorios": "Tots els camps són obligatoris.",
+    "ExcelOK": "L'arxiu s'ha carregat correctament.",
+    "ExcelKO": "Error en pujar el fitxer.",
+    "FormatoKO": "L'arxiu ha de ser de tipus .xls o .xlsx.",
+    "CarreteraKO": "El nom de la carretera no és vàlid.",
+    "ActuacionKO": "Ja existeix l'actuació."
+>>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
 }

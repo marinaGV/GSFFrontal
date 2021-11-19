@@ -29,7 +29,7 @@
     "Act" : "Actuaciones",
     "Tipo" : "Tipo",
     "Carretera" : "Carretera",
-    "ClaveObra" : "Clave Obra",
+    "ClaveObra" : "Clave de Obra",
     "Fecha" : "Fecha",
     "Sentido" : "Sentido",
     "Calzada" : "Calzada",
@@ -79,6 +79,7 @@
     "NGuardar":"No guardar",
     "cancelar":"Cancelar",
     "GuardarCam": "¿Desea guardar los cambios editados?",
+<<<<<<< HEAD
     "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",
     "VerImpAfor": "Ver/Importar Aforos",
     "region": "Región",
@@ -94,4 +95,21 @@
     "anyomedida": "Año/Medida",
     "campanya": "Campaña",
     "ImpAfr": "Importar Aforos"
+=======
+    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",	
+    "ActNueva": "Nueva Actuación",
+    "FechaFinAct": "Fecha Fin de Actuación",
+    "Creciente": "Creciente",
+    "Decreciente": "Decreciente",
+    "Observaciones": "Observaciones",
+    "SinTramAct": "No existen tramos con las opciones selccionadas.",
+    "SeleccionarTramos": "Seleccionar Tramos",
+    "CamposObligatorios": "Todos los campos son obligatorios.",
+    "ExcelOK": "El archivo se ha cargado correctamente.",
+    "ExcelKO": "Error al subir el fichero.",
+    "FormatoKO": "El archivo debe ser de tipo .xls o .xlsx.",
+    "CarreteraKO": "El nombre de la carretera no es válido.",
+    "ActuacionKO": "Ya existe la actuación."
+
+>>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
 }
