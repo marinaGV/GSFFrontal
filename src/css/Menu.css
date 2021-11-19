@@ -34,4 +34,5 @@
     border-radius: 4px;
     resize: vertical;
     font-size: 100%;
+    resize: horizontal;
   }

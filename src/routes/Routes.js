@@ -4,6 +4,7 @@ import Menu from '../pages/Menu';
 import Login from '../pages/Login';
 import CargarActuaciones from '../pages/CargarActuaciones';
 import VerEditTram from '../pages/VerEditTram';
+import VerImpAfor from '../pages/VerImpAfor';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/menu" component={Menu}/>
         <Route exact path="/cargaractuaciones" component={CargarActuaciones}/>
         <Route exact path="/VerEditTram" component={VerEditTram}/>
+        <Route exact path="/VerImpAfor" component={VerImpAfor}/>
       </Switch>
     </BrowserRouter>
 

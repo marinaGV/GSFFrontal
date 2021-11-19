@@ -165,7 +165,7 @@ seleccionarActuacion=(actuacion)=>{
     render(){
         return(
           
-            <div className="App">            
+            <div className="App" >            
             <button className="btn btn-primario" onClick={()=>{this.setState({form: null, tipoModal: 'insertar'}); this.modalImportar()}}><Trans ns= "global">ImpAct</Trans></button>       
             {"  "}
             <button className="btn btn-primario" onClick={()=>{this.setState({form: null}); this.modalInsertar()}}><Trans ns= "global">AddAct</Trans></button>      

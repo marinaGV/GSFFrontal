@@ -39,7 +39,7 @@ export const SidebarData = [
             },
             {
                 title: <Translation ns= "global">{(t) => <>{t('impAf')}</>}</Translation>,
-                path:'/menu'
+                path:'/VerImpAfor'
             },
             {
                 title: <Translation ns= "global">{(t) => <>{t('varAf')}</>}</Translation>,

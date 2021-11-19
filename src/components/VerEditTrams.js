@@ -8,6 +8,7 @@ import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import '../css/Pagination.css';
 import '../css/Menu.css';
 import { Translation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import BootstrapTable from 'react-bootstrap-table-next';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.css';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -168,7 +169,7 @@ class VerEditTrams extends Component{
       idtramos=this.state.form.idDdTiposFirmesTramo;
     }
 
-    console.log("MIRAR AQUI: ", idtramos);
+    console.log("idtramos: ", idtramos);
 
     //Devolvemos a false el valor que gestiona en que estado estamos
     editBool = false;
