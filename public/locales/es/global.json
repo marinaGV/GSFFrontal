@@ -79,7 +79,6 @@
     "NGuardar":"No guardar",
     "cancelar":"Cancelar",
     "GuardarCam": "¿Desea guardar los cambios editados?",
-<<<<<<< HEAD
     "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",
     "VerImpAfor": "Ver/Importar Aforos",
     "region": "Región",
@@ -94,9 +93,7 @@
     "velocidad": "Velocidad",
     "anyomedida": "Año/Medida",
     "campanya": "Campaña",
-    "ImpAfr": "Importar Aforos"
-=======
-    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",	
+    "ImpAfr": "Importar Aforos",
     "ActNueva": "Nueva Actuación",
     "FechaFinAct": "Fecha Fin de Actuación",
     "Creciente": "Creciente",
@@ -111,5 +108,4 @@
     "CarreteraKO": "El nombre de la carretera no es válido.",
     "ActuacionKO": "Ya existe la actuación."
 
->>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
 }

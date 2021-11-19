@@ -34,10 +34,7 @@
     border-radius: 4px;
     resize: vertical;
     font-size: 100%;
-<<<<<<< HEAD
     resize: horizontal;
-  }
-=======
   }
 
   input[type=number], select, textarea {
@@ -59,4 +56,3 @@
     resize: vertical;
     font-size: 100%;
   }
->>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
