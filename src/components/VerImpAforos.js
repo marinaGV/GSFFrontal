@@ -123,11 +123,7 @@ modalImportar=()=>{
             filter={filterFactory()}
             bordered={ false }
             headerWrapperClasses="table-responsive"
-<<<<<<< HEAD
             classes="w-auto text-nowrap"
-=======
-            classes='w-auto text-nowrap'
->>>>>>> 5de781f8fcccd6cb69713cff554113b03978f068
           >
 
 
