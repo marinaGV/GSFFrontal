@@ -79,10 +79,6 @@
     "NGuardar":"No guardar",
     "cancelar":"Cancelar",
     "GuardarCam": "¿Desea guardar los cambios editados?",
-<<<<<<< HEAD
-=======
-    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",
->>>>>>> 5de781f8fcccd6cb69713cff554113b03978f068
     "VerImpAfor": "Ver/Importar Aforos",
     "region": "Región",
     "pk": "Pk",
@@ -97,10 +93,7 @@
     "anyomedida": "Año/Medida",
     "campanya": "Campaña",
     "ImpAfr": "Importar Aforos",
-<<<<<<< HEAD
     "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",	
-=======
->>>>>>> 5de781f8fcccd6cb69713cff554113b03978f068
     "ActNueva": "Nueva Actuación",
     "FechaFinAct": "Fecha Fin de Actuación",
     "Creciente": "Creciente",
