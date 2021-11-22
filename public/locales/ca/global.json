@@ -79,7 +79,6 @@
     "cancelar":"Cancel·lar",
     "GuardarCam": "Voleu desar els canvis editats?",
     "GuardarCamAdd": "Voleu desar els canvis afegits?",
-<<<<<<< HEAD
     "VerImpAfor": "Veure/Importar Aforaments",
     "region": "Regió",
     "pk": "Pk",
@@ -93,8 +92,7 @@
     "velocidad": "Velocidat",
     "anyomedida": "Any/Mesura",
     "campanya": "Campanya",
-    "ImpAfr": "Importar Aforaments"	
-=======
+    "ImpAfr": "Importar Aforaments",	
     "ErrorGuardarAct": "S'ha produït un error en guardar l'actuació.",
     "ActNueva": "Nova Actuació",
     "Clave de Obra": "Clau d'Obra",
@@ -109,6 +107,7 @@
     "ExcelKO": "Error en pujar el fitxer.",
     "FormatoKO": "L'arxiu ha de ser de tipus .xls o .xlsx.",
     "CarreteraKO": "El nom de la carretera no és vàlid.",
-    "ActuacionKO": "Ja existeix l'actuació."
->>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
+    "ActuacionKO": "Ja existeix l'actuació.",
+    "descPDF": "Vols descarregar el PDF"
+
 }

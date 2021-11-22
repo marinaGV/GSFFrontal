@@ -79,8 +79,6 @@
     "NGuardar":"No guardar",
     "cancelar":"Cancelar",
     "GuardarCam": "¿Desea guardar los cambios editados?",
-<<<<<<< HEAD
-    "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",
     "VerImpAfor": "Ver/Importar Aforos",
     "region": "Región",
     "pk": "Pk",
@@ -94,8 +92,7 @@
     "velocidad": "Velocidad",
     "anyomedida": "Año/Medida",
     "campanya": "Campaña",
-    "ImpAfr": "Importar Aforos"
-=======
+    "ImpAfr": "Importar Aforos",
     "GuardarCamAdd": "¿Desea guardar los cambios añadidos?",	
     "ActNueva": "Nueva Actuación",
     "FechaFinAct": "Fecha Fin de Actuación",
@@ -109,7 +106,7 @@
     "ExcelKO": "Error al subir el fichero.",
     "FormatoKO": "El archivo debe ser de tipo .xls o .xlsx.",
     "CarreteraKO": "El nombre de la carretera no es válido.",
-    "ActuacionKO": "Ya existe la actuación."
+    "ActuacionKO": "Ya existe la actuación.",
+    "descPDF": "Quieres descargar el PDF"
 
->>>>>>> adda084bc99ecfaa92cdd182427ba7bd9ea99ee7
 }

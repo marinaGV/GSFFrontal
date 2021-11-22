@@ -701,7 +701,8 @@ seleccionarTramo=(diccionario, editar)=>{
               data={this.state.tableData}
               pagination={this.pagination}
               filter={filterFactory()}
-              bordered={ false } >
+              bordered={ false } 
+              headerWrapperClasses="table-responsive">
               </BootstrapTable>
           </div>
         ),
@@ -721,7 +722,8 @@ seleccionarTramo=(diccionario, editar)=>{
             data={this.state.tableData2}
             pagination={this.pagination}
             filter={filterFactory()}
-            bordered={ false } >
+            bordered={ false } 
+            headerWrapperClasses="table-responsive">
             </BootstrapTable>
           </div>
         ),
@@ -741,7 +743,8 @@ seleccionarTramo=(diccionario, editar)=>{
             data={this.state.tableData3}
             pagination={this.pagination}
             filter={filterFactory()}
-            bordered={ false } >
+            bordered={ false } 
+            headerWrapperClasses="table-responsive">
             </BootstrapTable>
           </div>
         ),
@@ -762,7 +765,8 @@ seleccionarTramo=(diccionario, editar)=>{
             data={this.state.tableData4}
             pagination={this.pagination}
             filter={filterFactory()}
-            bordered={ false } >
+            bordered={ false } 
+            headerWrapperClasses="table-responsive">
             </BootstrapTable>
           </div>
         ),
@@ -782,7 +786,8 @@ seleccionarTramo=(diccionario, editar)=>{
             data={this.state.tableData5}
             pagination={this.pagination}
             filter={filterFactory()}
-            bordered={ false } >
+            bordered={ false } 
+            headerWrapperClasses="table-responsive">
             </BootstrapTable>
           </div>
         ),
@@ -812,7 +817,8 @@ seleccionarTramo=(diccionario, editar)=>{
             data={this.state.capa}
             pagination={this.pagination}
             filter={filterFactory()}
-            bordered={ false } >
+            bordered={ false } 
+            headerWrapperClasses="table-responsive">
             </BootstrapTable>
           </div>
         ),

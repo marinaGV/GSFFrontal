@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import CargarActuaciones from '../pages/CargarActuaciones';
 import VerEditTram from '../pages/VerEditTram';
 import VerImpAfor from '../pages/VerImpAfor';
+import VerEditCarTram from '../pages/VerEditCarTram';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route exact path="/menu" component={Menu}/>
+        <Route exact path="/VerEditCarTram" component={VerEditCarTram}/>
         <Route exact path="/cargaractuaciones" component={CargarActuaciones}/>
         <Route exact path="/VerEditTram" component={VerEditTram}/>
         <Route exact path="/VerImpAfor" component={VerImpAfor}/>

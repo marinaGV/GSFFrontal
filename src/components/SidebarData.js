@@ -31,7 +31,7 @@ export const SidebarData = [
             },
             {
                 title: <Translation ns= "global">{(t) => <>{t('verEditCyT')}</>}</Translation>,
-                path:'/menu'
+                path:'/VerEditCarTram'
             },
             {
                 title: <Translation ns= "global">{(t) => <>{t('verEditDicT')}</>}</Translation>,
