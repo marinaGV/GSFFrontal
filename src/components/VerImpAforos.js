@@ -41,7 +41,7 @@ class VerImpAforos extends Component{
 
 
   this.columns = [
-    {dataField: 'region', text:<Translation ns= "global">{(t) => <>{t('region')}</>}</Translation>, width: '500', sort: true, filter: textFilter()},
+    {dataField: 'region', text:<Translation ns= "global">{(t) => <>{t('region')}</>}</Translation>, sort: true, filter: textFilter()},
     {dataField: 'codigo', text: <Translation ns= "global">{(t) => <>{t('codigo')}</>}</Translation>, sort: true, filter: textFilter()},
     {dataField: 'carretera', text: <Translation ns= "global">{(t) => <>{t('Carretera')}</>}</Translation>, sort: true, filter: textFilter()},
     {dataField: 'pk', text: <Translation ns= "global">{(t) => <>{t('pk')}</>}</Translation>, sort: true, filter: textFilter()},
@@ -123,7 +123,11 @@ modalImportar=()=>{
             filter={filterFactory()}
             bordered={ false }
             headerWrapperClasses="table-responsive"
+<<<<<<< HEAD
             classes="w-auto text-nowrap"
+=======
+            classes='w-auto text-nowrap'
+>>>>>>> 5de781f8fcccd6cb69713cff554113b03978f068
           >
 
 
