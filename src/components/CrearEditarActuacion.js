@@ -93,10 +93,10 @@ function CrearEditarActuacion({Actuacion, Data}){
 
     //Desplegables de la Actuación
     const optionsTipoCalz = [
-        {value: 1, label: 'Anada/Tornada'},
-        {value: 2, label: 'Doble'},
-        {value: 3, label: 'Invers'},
-        {value: 4, label: 'Unic'},
+        {value: 'Anada/Tornada', label: 'Anada/Tornada'},
+        {value: 'Doble', label: 'Doble'},
+        {value: 'Invers', label: 'Invers'},
+        {value: 'Unic', label: 'Unic'},
     ]
 
     const optionsCarriles = [
@@ -108,13 +108,13 @@ function CrearEditarActuacion({Actuacion, Data}){
     ]
 
     const optionsCalzada = [
-        {value: 1, label: 'Única'},
-        {value: 2, label: 'Separada'}
+        {value: 'Unica', label: 'Única'},
+        {value: 'Separada', label: 'Separada'}
     ]
 
-    const Utilizada = [
-        {value: 1, label: 'Creixent'},
-        {value: 2, label: 'Decreixent'}
+    const optionsUtilizada = [
+        {value: 'Creixent', label: 'Creixent'},
+        {value: 'Decreixent', label: 'Decreixent'}
     ]
 
     //Desplegables para la pestaña de Frimes 
@@ -278,7 +278,9 @@ function CrearEditarActuacion({Actuacion, Data}){
       
     });
 
-
+    if (FormActuacion.Carril1 > 0 && FormActuacion.Carril2 > 0){
+        actualizarFormActuacion({Calzada: "Separada"});
+    }
     console.log("FORM ACTUACIONES: ", FormActuacion);
 
     //habBtnSeleccionar();
@@ -485,19 +487,19 @@ function CrearEditarActuacion({Actuacion, Data}){
     data.append('CPA', FormActuacion.CPA)
     data.append('idCapaRodaduraCarril', FormActuacion.CapaRodaduraCarril)
     data.append('CapaRodaduraEspCarr', FormActuacion.CapaRodaduraEspCarr)
-    data.append('idCapaRodaduraArcen', FormActuacion.CapaRodaduraEspArc)
+    data.append('idCapaRodaduraArcen', FormActuacion.CapaRodaduraArcen)
     data.append('CapaRodaduraEspArc', FormActuacion.CapaRodaduraEspArc)
     data.append('idCapaIntermediaCarril', FormActuacion.CapaIntermediaCarril)
     data.append('CapaIntermediaEspCarr', FormActuacion.CapaIntermediaEspCarr)
-    data.append('idCapaIntermediaArcen', FormActuacion.CapaIntermediaEspArc)
+    data.append('idCapaIntermediaArcen', FormActuacion.CapaIntermediaArcen)
     data.append('CapaIntermediaEspArc', FormActuacion.CapaIntermediaEspArc)
     data.append('idCapaBaseCarril', FormActuacion.CapaBaseCarril)
     data.append('CapaBaseEspCarr', FormActuacion.CapaBaseEspCarr)
-    data.append('idCapaBaseArcen', FormActuacion.CapaBaseEspArc)
+    data.append('idCapaBaseArcen', FormActuacion.CapaBaseArcen)
     data.append('CapaBaseEspArc', FormActuacion.CapaBaseEspArc)
     data.append('idCapaSubbaseCarril', FormActuacion.CapaSubbaseCarril)
     data.append('CapaSubbaseEspCarr', FormActuacion.CapaSubbaseEspCarr)
-    data.append('idCapaSubbaseArcen', FormActuacion.CapaSubbaseEspArc)
+    data.append('idCapaSubbaseArcen', FormActuacion.CapaSubbaseArcen)
     data.append('CapaSubbaseEspArc', FormActuacion.CapaSubbaseEspArc)
 
     //Explanadas
@@ -846,7 +848,7 @@ function CrearEditarActuacion({Actuacion, Data}){
                 <Col xs={3}>
                     <Select name="RegGestion" 
                     onChange={handleSelectChange}
-                    labelKey='codigo'
+                    labelKey='nombre'
                     valueKey='codigo'
                     options={optionsRegimenGestion}
                     defaultValue={{label: "Seleccionar", value: 0}}>               
@@ -858,7 +860,7 @@ function CrearEditarActuacion({Actuacion, Data}){
                 <Col xs={3}>
                     <Select name="RegExplot" 
                     onChange={handleSelectChange}
-                    labelKey='codigo'
+                    labelKey='nombre'
                     valueKey='codigo'
                     options={optionsRegimenExplotacion}
                     defaultValue={{label: "Seleccionar", value: 0}}>               
@@ -1139,7 +1141,7 @@ function CrearEditarActuacion({Actuacion, Data}){
                 {MostrarCampos.ShowUtilizada == true ?<Col xs={2}>
                                                         <Select name="Utilizada" 
                                                             onChange={handleSelectChange}
-                                                            options={optionsCalzada}
+                                                            options={optionsUtilizada}
                                                             defaultValue={{label: "Seleccionar", value: 0}}>                   
                                                         </Select><br />                        
                                                     </Col> : null}
