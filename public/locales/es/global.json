@@ -130,6 +130,14 @@
     "ZonaPluv": "Zona Pluviométrica",
     "Utilizada": "Utilizada",
     "Longitud": "Longitud",
-    "FilasCargadas": "Nº de filas cargadas: <1>{{FilasCargadas}}</1>"
+    "FilasCargadas": "Nº de filas cargadas: <1>{{FilasCargadas}}</1>",
+    "ClaveObraKO": "Campo obligatorio. El campo 'Clave de obra' tiene caracteres no válidos. Sólo se permiten letras, números, espacios, puntos y guiones hasta un máximo de longitud de 32.",
+    "FechaActuacionKO": "Campo obligatorio. La fecha debe ser anterior a la fecha actual.",
+    "CarrilesKO": "El número de carriles es incoherente con el tipo de calzada seleccionado.",
+    "GuardarActuacionOK": "La actuación se ha guardado correctamente.",
+    "GuardarActuacionKO": "Se ha producido un error al guardar la actuación.",
+    "AnchCarril": "Anchura Carril",
+    "AnchArcen": "Anchura Arcen",
+    "EspesorKO": "Debe indicar el espesor, si ha seleccionado una capa."
 
 }
